@@ -1,4 +1,34 @@
-# HACKATHON-RMIT-2026-Challenge-2-UNLOCKED
+# SecureDocs
+
+> Synthetic document sharing with protected reads reserved for verified, collectively governed access.
+
+## Project overview
+
+**Vision & originality.** SecureDocs lets people discover useful document metadata while sensitive note bodies remain unavailable until a future TideCloak-authorized permission grant is verified by the server.
+
+**Trust constraint.** A conventional privileged administrator could grant access alone. The target STEP 5 demonstration uses TideCloak QEA so a document-role change is not committed by one administrator acting unilaterally.
+
+**Value & impact.** Research, community, and review teams can share enough context for someone to request access without prematurely exposing the underlying material.
+
+**Why TideCloak matters.** TideCloak is intended to govern the permission grant and supply the verified identity/role used by the server. STEP 4 does not claim this integration is complete: its adapter denies every protected read until real verification replaces it.
+
+**Prototype & storytelling.** The responsive app includes a synthetic document register, a locked-document screen, a public reader, an in-memory demo-note form, an honest authentication-status page, and APIs that return metadata while denying protected content.
+
+## STEP 4 application
+
+Requirements: Node.js 20.9 or later and npm. The verified implementation used Node.js 24.21.0 and npm 11.19.0.
+
+```powershell
+npm install
+npm test
+npm run typecheck
+npm run build
+npm run dev
+```
+
+Open <http://127.0.0.1:3000/>. If that port is occupied, run `npm run dev -- --port 3122` and use the printed URL.
+
+The create-note screen is deliberately an in-memory synthetic demo: refreshing removes the draft. Do not enter real or confidential information. The app does not commit `tidecloak.json`, tokens, or credentials, and it does not yet provide TideCloak sign-in. Protected API reads return `401` while the STEP 4 deny-by-default adapter is active. See [the STEP 4 implementation report](docs/STEP4_IMPLEMENTATION_REPORT.md) for evidence and limitations.
 
 ## SecureDocs local development (STEP 3)
 
