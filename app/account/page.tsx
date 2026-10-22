@@ -1,23 +1,27 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { AccountAuthStatus } from "../../components/account-auth-status";
 import { ArrowIcon, CheckIcon, LockIcon, ShieldIcon } from "../../components/icons";
 import { StatusChip } from "../../components/status-chip";
+import { loadTideCloakConfig } from "../../src/server/tidecloak-config.server";
 
 export const metadata: Metadata = { title: "Account status" };
 
 export default function AccountPage() {
+  const configured = loadTideCloakConfig() !== null;
+
   return (
     <div className="account-page">
       <Link className="back-link" href="/">
         <ArrowIcon /> Back to documents
       </Link>
       <section className="page-heading">
-        <p className="context-line">Authentication readiness</p>
-        <h1>TideCloak is ready outside the app.</h1>
+        <p className="context-line">Authentication and governance status</p>
+        <h1>Every protected read answers to TideCloak.</h1>
         <p>
-          STEP 3 verified the local realm and a Tide console session. This app has no client
-          configuration or verified user session yet, so it treats every visitor as anonymous.
+          SecureDocs now uses the official SDK and verifies access tokens on the server.
+          A live sign-in and the three-Guardian QEA grant still require the local realm.
         </p>
       </section>
 
@@ -27,7 +31,7 @@ export default function AccountPage() {
             <h2 id="status-title">Integration ledger</h2>
             <p>Evidence-backed status for this checkout</p>
           </div>
-          <StatusChip tone="pending">Partial readiness</StatusChip>
+          <StatusChip tone="pending">Live proof pending</StatusChip>
         </div>
 
         <div className="status-row">
@@ -40,15 +44,11 @@ export default function AccountPage() {
           <div><strong>Tide administrator</strong><p>One linked administrator and console session verified.</p></div>
           <span>Verified</span>
         </div>
-        <div className="status-row">
-          <span className="status-row-icon is-pending"><ShieldIcon /></span>
-          <div><strong>Application sign-in</strong><p>No `tidecloak.json` or app session is installed in this checkout.</p></div>
-          <span>STEP 5</span>
-        </div>
+        <AccountAuthStatus configured={configured} />
         <div className="status-row">
           <span className="status-row-icon is-pending"><LockIcon /></span>
-          <div><strong>QEA document roles</strong><p>Three Guardians and a 2-of-3 grant remain unconfigured and untested.</p></div>
-          <span>STEP 5</span>
+          <div><strong>QEA document roles</strong><p>Three distinct Guardians and a real 2-of-3 document-role grant are not yet verified.</p></div>
+          <span>Human action</span>
         </div>
       </section>
 
@@ -61,7 +61,7 @@ export default function AccountPage() {
         >
           Open local Tide console
         </a>
-        <p>Only available while the verified local TideCloak container is running.</p>
+        <p>Use the console for real role proposals and Guardian approvals; SecureDocs never approves them itself.</p>
       </div>
     </div>
   );

@@ -10,7 +10,12 @@ type RouteContext = { params: Promise<{ id: string }> };
 export async function GET(request: Request, { params }: RouteContext) {
   const viewer = await tideAuthorization.resolveViewer(request);
   const result = await documentService.readDocument((await params).id, viewer);
-  const options = { headers: { "Cache-Control": "no-store" } };
+  const options = {
+    headers: {
+      "Cache-Control": "private, no-store",
+      Vary: "Authorization, Cookie",
+    },
+  };
 
   if (result.kind === "not-found") {
     return NextResponse.json({ error: "Document not found." }, { ...options, status: 404 });

@@ -3,8 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { ArrowIcon, LockIcon, ShieldIcon } from "../../../components/icons";
+import { ProtectedDocumentReader } from "../../../components/protected-document-reader";
 import { StatusChip } from "../../../components/status-chip";
 import { documentService } from "../../../src/server/documents.server";
+import { loadTideCloakConfig } from "../../../src/server/tidecloak-config.server";
+import { documentRoleFor } from "../../../src/server/tide-authorization";
 
 type PageProps = { params: Promise<{ id: string }> };
 
@@ -21,6 +24,7 @@ export default async function DocumentPage({ params }: PageProps) {
 
   const { document } = result;
   const readable = result.kind === "readable";
+  const tideCloakConfigured = loadTideCloakConfig() !== null;
 
   return (
     <div className="detail-page">
@@ -51,25 +55,7 @@ export default async function DocumentPage({ params }: PageProps) {
               </div>
               <p className="document-body">{result.body}</p>
             </>
-          ) : (
-            <div className="locked-reader">
-              <span className="locked-reader-icon">
-                <LockIcon />
-              </span>
-              <p className="context-line">Content not delivered</p>
-              <h2 id="reader-title">This document remains locked.</h2>
-              <p>
-                SecureDocs did not load the body from the server. A verified TideCloak
-                identity and document-specific permission will be required in STEP 5.
-              </p>
-              <button className="button button-disabled" type="button" disabled>
-                Request access · Available in STEP 5
-              </button>
-              <small>
-                This control does not create an access request or simulate Guardian approval.
-              </small>
-            </div>
-          )}
+          ) : <ProtectedDocumentReader documentId={document.id} configured={tideCloakConfigured} />}
         </section>
 
         <aside className="document-facts">
@@ -85,7 +71,7 @@ export default async function DocumentPage({ params }: PageProps) {
             </div>
             <div>
               <dt>Authorization</dt>
-              <dd>{readable ? "Not required" : "TideCloak adapter pending"}</dd>
+              <dd>{readable ? "Not required" : documentRoleFor(document.id) ?? "Unmapped"}</dd>
             </div>
             <div>
               <dt>Data</dt>

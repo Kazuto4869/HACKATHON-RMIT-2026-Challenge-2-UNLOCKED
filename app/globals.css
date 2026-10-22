@@ -140,6 +140,40 @@ a {
   background: rgba(255, 255, 255, 0.55);
 }
 
+.auth-button,
+.auth-state {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 13px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 10px;
+  color: var(--ink);
+  background: var(--paper-raised);
+  font-size: 0.86rem;
+  font-weight: 760;
+}
+
+.auth-button {
+  cursor: pointer;
+}
+
+.auth-button:hover {
+  border-color: var(--ink-soft);
+  background: #fff;
+}
+
+.auth-state {
+  color: var(--ink-soft);
+}
+
+.auth-error {
+  color: var(--danger);
+  border-color: var(--danger);
+  background: var(--danger-pale);
+}
+
 .site-header nav svg {
   width: 17px;
 }
@@ -272,6 +306,11 @@ h3 {
   border-color: #c6cac5;
   box-shadow: none;
   cursor: not-allowed;
+}
+
+.button:disabled {
+  opacity: 0.72;
+  cursor: wait;
 }
 
 .boundary-banner {
@@ -583,6 +622,16 @@ h3 {
   max-width: 54ch;
   margin-top: 12px;
   color: var(--ink-soft);
+}
+
+.request-result {
+  margin-top: 18px;
+}
+
+.request-result p {
+  margin: 10px 0 0;
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
 }
 
 .document-facts {
@@ -950,6 +999,11 @@ textarea[aria-invalid="true"] {
   .site-header nav a {
     justify-content: center;
     padding-inline: 9px;
+  }
+
+  .site-header nav .auth-button,
+  .site-header nav .auth-state {
+    width: 100%;
   }
 
   h1 {

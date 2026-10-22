@@ -16,7 +16,7 @@ Lead with the working document register and its mixed public/locked states, not 
 
 ## Interaction
 
-Use direct links and native form controls. No ornamental animation. Hover, focus, disabled, error, and success states must communicate the result in words.
+Use direct links and native form controls. No ornamental animation. Hover, focus, disabled, error, and success states must communicate the result in words. Authentication failure, anonymous access, role denial, pending application request, and authorized content are distinct states; a pending request must never look approved.
 
 ## Responsive behavior
 
