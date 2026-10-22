@@ -1,68 +1,54 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight, Check, LockKeyhole } from "lucide-react";
 
-import { AccountAuthStatus } from "../../components/account-auth-status";
-import { ArrowIcon, CheckIcon, LockIcon, ShieldIcon } from "../../components/icons";
 import { StatusChip } from "../../components/status-chip";
-import { loadTideCloakConfig } from "../../src/server/tidecloak-config.server";
+import { AccountAuthStatus } from "../../components/account-auth-status";
+import { tideCloakConfigured } from "../../src/server/documents.server";
 
 export const metadata: Metadata = { title: "Account status" };
 
+const items = [
+  { title: "Local TideCloak realm", detail: "The securedocs realm was verified in STEP 3.", status: "Verified", icon: Check, ready: true },
+  { title: "Tide administrator", detail: "One linked administrator and console session verified.", status: "Verified", icon: Check, ready: true },
+  { title: "Guardian access", detail: "The three-Guardian approval flow still needs a live test.", status: "Not verified", icon: LockKeyhole },
+];
+
 export default function AccountPage() {
-  const configured = loadTideCloakConfig() !== null;
-
   return (
-    <div className="account-page">
-      <Link className="back-link" href="/">
-        <ArrowIcon /> Back to documents
+    <div className="mx-auto max-w-3xl space-y-8">
+      <Link className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-700" href="/">
+        <ArrowRight className="size-4 rotate-180" /> Back to documents
       </Link>
-      <section className="page-heading">
-        <p className="context-line">Authentication and governance status</p>
-        <h1>Every protected read answers to TideCloak.</h1>
-        <p>
-          SecureDocs now uses the official SDK and verifies access tokens on the server.
-          A live sign-in and the three-Guardian QEA grant still require the local realm.
-        </p>
+      <header className="space-y-2">
+        <p className="text-sm font-medium text-blue-700">Account status</p>
+        <h1 className="text-3xl font-semibold tracking-tight text-slate-900">Your setup is partly ready</h1>
+        <p className="max-w-2xl text-slate-600">Check your sign-in and access setup.</p>
+      </header>
+      <section className="rounded-xl border border-slate-200 bg-white p-6" aria-label="Setup status">
+        <div className="mb-5 flex items-center justify-between gap-4">
+          <h2 className="font-semibold text-slate-900">Setup status</h2>
+          <StatusChip tone="pending">In progress</StatusChip>
+        </div>
+        <ul className="divide-y divide-slate-100">
+          {items.map(({ title, detail, status, icon: Icon, ready }) => (
+            <li key={title} className="flex items-center gap-4 py-4 first:pt-0 last:pb-0">
+              <span className={`grid size-9 shrink-0 place-items-center rounded-full ${ready ? "bg-green-50 text-green-700" : "bg-amber-50 text-amber-700"}`}>
+                <Icon className="size-4" aria-hidden="true" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <strong className="text-sm font-medium text-slate-900">{title}</strong>
+                <p className="mt-0.5 text-sm text-slate-500">{detail}</p>
+              </div>
+              <span className="text-xs text-slate-500">{status}</span>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-5 border-t border-slate-100 pt-5"><AccountAuthStatus configured={tideCloakConfigured} /></div>
       </section>
-
-      <section className="status-ledger" aria-labelledby="status-title">
-        <div className="section-heading">
-          <div>
-            <h2 id="status-title">Integration ledger</h2>
-            <p>Evidence-backed status for this checkout</p>
-          </div>
-          <StatusChip tone="pending">Live proof pending</StatusChip>
-        </div>
-
-        <div className="status-row">
-          <span className="status-row-icon is-ready"><CheckIcon /></span>
-          <div><strong>Local TideCloak realm</strong><p>`securedocs` verified in STEP 3.</p></div>
-          <span>Verified</span>
-        </div>
-        <div className="status-row">
-          <span className="status-row-icon is-ready"><CheckIcon /></span>
-          <div><strong>Tide administrator</strong><p>One linked administrator and console session verified.</p></div>
-          <span>Verified</span>
-        </div>
-        <AccountAuthStatus configured={configured} />
-        <div className="status-row">
-          <span className="status-row-icon is-pending"><LockIcon /></span>
-          <div><strong>QEA document roles</strong><p>Three distinct Guardians and a real 2-of-3 document-role grant are not yet verified.</p></div>
-          <span>Human action</span>
-        </div>
-      </section>
-
-      <div className="account-actions">
-        <a
-          className="button button-secondary"
-          href="http://127.0.0.1:8080/realms/securedocs/tide-console/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Open local Tide console
-        </a>
-        <p>Use the console for real role proposals and Guardian approvals; SecureDocs never approves them itself.</p>
-      </div>
+      <a className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50" href="http://127.0.0.1:8080/realms/securedocs/tide-console/" target="_blank" rel="noreferrer">
+        Open TideCloak console
+      </a>
     </div>
   );
 }

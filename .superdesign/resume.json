@@ -1,0 +1,39 @@
+﻿{
+    "schemaVersion":  1,
+    "targets":  {
+                    "/":  {
+                              "targetKind":  "existing-ui",
+                              "projectId":  "e3b8d3d6-341f-4c8f-8817-142938b98adb",
+                              "baselineDraftId":  "fdaf1ed2-7481-4c49-87b0-41d09096acb5",
+                              "activeDraftId":  "fdaf1ed2-7481-4c49-87b0-41d09096acb5",
+                              "designSystemPath":  ".superdesign/design-system.md",
+                              "contextFiles":  [
+                                                   "app/page.tsx",
+                                                   "app/layout.tsx",
+                                                   "components/site-header.tsx",
+                                                   "components/status-chip.tsx",
+                                                   "components/icons.tsx",
+                                                   "app/globals.css:1:405",
+                                                   "app/globals.css:878:1059",
+                                                   ".superdesign/design-system.md"
+                                               ],
+                              "fingerprints":  {
+                                                   "app/layout.tsx":  "632b997eb370bf087957e8976950f5f97925b4b343b75c790c1eef4d61c77ea9",
+                                                   ".superdesign/design-system.md":  "e8c9beaa6a26a25b9e41fc7fb4187292daaed8ea5cc5bcd30db180f0d223cd7f",
+                                                   "components/site-header.tsx":  "aec92dcfe1745a64663bdefb0f6599a061809e1e1a135cda557dee4f62402f8b",
+                                                   "components/status-chip.tsx":  "121397cc56276cace38325a67dbba39246808eec255945d93f25883349fd6f55",
+                                                   "components/icons.tsx":  "16129aaa3cdf4ab2cd2f6e2496835fc6b89d64c0cd5a62d79a45a0e19f03e4a0",
+                                                   "app/page.tsx":  "a338a5e74e02c963b938b85a94e00f11f8bac8e2dbdd49198be9fb5b16c224e9",
+                                                   "app/globals.css":  "2d299919f22af17d054ed780438bd6bcf60f9aff38f75ff5a5814b29598bd776"
+                                               },
+                              "drafts":  {
+                                             "fdaf1ed2-7481-4c49-87b0-41d09096acb5":  {
+                                                                                          "title":  "SecureDocs document dashboard",
+                                                                                          "visualDirection":  "clean minimal light airy secure document sharing dashboard",
+                                                                                          "currentVersion":  3
+                                                                                      }
+                                         },
+                              "updatedAt":  "2026-10-22T07:12:53.1943137Z"
+                          }
+                }
+}

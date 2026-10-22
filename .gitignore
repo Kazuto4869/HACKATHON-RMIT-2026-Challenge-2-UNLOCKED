@@ -9,6 +9,10 @@ node_modules/
 .next/
 out/
 *.tsbuildinfo
+.data/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
 
 # Local workflow and visual-review artifacts.
 .superpowers/

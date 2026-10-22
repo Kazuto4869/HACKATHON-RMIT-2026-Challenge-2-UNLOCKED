@@ -1,7 +1,9 @@
 import "server-only";
+import { mkdirSync } from "node:fs";
+import { join } from "node:path";
 
 import type { DocumentMetadata } from "../domain/documents.ts";
-import type { DocumentRepository } from "./document-service.ts";
+import { createSqliteStore } from "./sqlite-store.ts";
 
 const documents: readonly DocumentMetadata[] = [
   {
@@ -61,14 +63,12 @@ const bodies = new Map<string, string>([
   ],
 ]);
 
-export const documentRepository: DocumentRepository = {
-  async listMetadata() {
-    return documents;
-  },
-  async getMetadata(id) {
-    return documents.find((document) => document.id === id) ?? null;
-  },
-  async getBody(id) {
-    return bodies.get(id) ?? null;
-  },
-};
+const directory = join(process.cwd(), ".data");
+mkdirSync(directory, { recursive: true });
+const filename = join(directory, "securedocs.sqlite");
+const store = createSqliteStore(filename, documents.map((document) => ({
+  ...document, body: bodies.get(document.id)!,
+})));
+
+export const documentRepository = store.repository;
+export const accessRequestStore = store.requests;

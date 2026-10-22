@@ -5,29 +5,30 @@ import { TideProvider } from "../components/tide-provider";
 import { loadTideCloakConfig } from "../src/server/tidecloak-config.server";
 import "./globals.css";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: {
     default: "SecureDocs",
-    template: "%s · SecureDocs",
+    template: "%s | SecureDocs",
   },
-  description: "A deny-by-default document sharing prototype for TideCloak QEA integration.",
+  description: "Simple document sharing, protected by TideCloak.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const tideCloakConfig = loadTideCloakConfig();
-
+  const config = loadTideCloakConfig();
   return (
     <html lang="en">
-      <body>
-        <TideProvider config={tideCloakConfig}>
-          <div className="app-shell">
-            <SiteHeader authConfigured={tideCloakConfig !== null} />
-            <main>{children}</main>
-            <footer>
-              <span>SecureDocs · STEP 5 integration</span>
-              <span>Synthetic data only</span>
-            </footer>
-          </div>
+      <body className="bg-slate-50 text-slate-900 antialiased">
+        <TideProvider config={config}>
+        <div className="min-h-screen lg:flex">
+          <SiteHeader authConfigured={config !== null} />
+          <main className="min-w-0 flex-1 bg-white">
+            <div className="mx-auto w-full max-w-[1440px] px-5 py-7 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
+              {children}
+            </div>
+          </main>
+        </div>
         </TideProvider>
       </body>
     </html>

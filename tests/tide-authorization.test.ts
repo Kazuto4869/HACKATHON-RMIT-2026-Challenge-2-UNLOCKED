@@ -72,6 +72,7 @@ describe("Tide access-token boundary", () => {
         ? {
             sub: "requester-01",
             typ: "Bearer",
+            aud: config.resource,
             exp: 4102444800,
             realm_access: { roles: ["doc_read_coastal_resilience_notes"] },
             resource_access: {
@@ -137,11 +138,11 @@ describe("Tide access-token boundary", () => {
   test("rejects signed non-access, expired, and sender-bound tokens", async () => {
     const roles = { "securedocs-client": { roles: ["doc_read_patient_safety_brief"] } };
     for (const claims of [
-      { sub: "requester-01", typ: "ID", exp: 4102444800, resource_access: roles },
-      { sub: "requester-01", typ: "Bearer", resource_access: roles },
-      { sub: "requester-01", typ: "Bearer", exp: 1, resource_access: roles },
-      { sub: "requester-01", typ: "DPoP", exp: 4102444800, resource_access: roles },
-      { sub: "requester-01", typ: "Bearer", exp: 4102444800, cnf: { jkt: "bound" }, resource_access: roles },
+      { sub: "requester-01", aud: config.resource, typ: "ID", exp: 4102444800, resource_access: roles },
+      { sub: "requester-01", aud: config.resource, typ: "Bearer", resource_access: roles },
+      { sub: "requester-01", aud: config.resource, typ: "Bearer", exp: 1, resource_access: roles },
+      { sub: "requester-01", aud: config.resource, typ: "DPoP", exp: 4102444800, resource_access: roles },
+      { sub: "requester-01", aud: config.resource, typ: "Bearer", exp: 4102444800, cnf: { jkt: "bound" }, resource_access: roles },
     ]) {
       const adapter = createTideAuthorizationAdapter(config, async () => claims);
       assert.equal(await adapter.resolveViewer(new Request("http://127.0.0.1", {
@@ -155,5 +156,16 @@ describe("Tide access-token boundary", () => {
     assert.equal(documentRoleFor("coastal-resilience-notes"), "doc_read_coastal_resilience_notes");
     assert.equal(documentRoleFor("funding-review-memo"), "doc_read_funding_review_memo");
     assert.equal(documentRoleFor("sharing-charter"), null);
+    assert.equal(documentRoleFor("toString"), null);
+    assert.equal(documentRoleFor("../../admin"), null);
+    assert.equal(documentRoleFor("45dd55c6-303c-4d85-ab64-359984cdd301"), "doc_read_45dd55c6303c4d85ab64359984cdd301");
+  });
+
+  test("allows only the verified owner or exact document-role holder", async () => {
+    const adapter = createTideAuthorizationAdapter(config, async () => null);
+    const document = { ...patientDocument, ownerId: "real-owner" };
+    assert.equal(await adapter.canReadDocument({ subject: "real-owner", roles: [] }, document), true);
+    assert.equal(await adapter.canReadDocument({ subject: "other-user", roles: [] }, document), false);
+    assert.equal(await adapter.canReadDocument({ subject: "other-user", roles: ["doc_read_coastal_resilience_notes"] }, document), false);
   });
 });

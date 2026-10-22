@@ -15,6 +15,7 @@ export type TideTokenClaims = {
   typ?: unknown;
   exp?: unknown;
   cnf?: unknown;
+  aud?: unknown;
   realm_access?: { roles?: unknown };
   resource_access?: Record<string, { roles?: unknown }>;
 } & Record<string, unknown>;
@@ -31,7 +32,11 @@ const documentRoles = {
 } as const;
 
 export function documentRoleFor(documentId: string): string | null {
-  return documentRoles[documentId as keyof typeof documentRoles] ?? null;
+  const seedRole = Object.hasOwn(documentRoles, documentId)
+    ? documentRoles[documentId as keyof typeof documentRoles] : null;
+  if (seedRole) return seedRole;
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(documentId)
+    ? `doc_read_${documentId.replaceAll("-", "")}` : null;
 }
 
 function cookieValue(cookieHeader: string, name: string): string | null {
@@ -77,7 +82,8 @@ export function createTideAuthorizationAdapter(
         if (
           !claims || typeof claims.sub !== "string" || !claims.sub ||
           claims.typ !== "Bearer" || typeof claims.exp !== "number" ||
-          claims.exp * 1000 <= Date.now() || claims.cnf !== undefined
+          claims.exp * 1000 <= Date.now() || claims.cnf !== undefined ||
+          !(claims.aud === config.resource || (Array.isArray(claims.aud) && claims.aud.includes(config.resource)))
         ) return null;
 
         const roles = stringRoles(claims.resource_access?.[config.resource]?.roles);
@@ -87,6 +93,7 @@ export function createTideAuthorizationAdapter(
       }
     },
     async canReadDocument(viewer, document) {
+      if (viewer.subject === document.ownerId) return true;
       const requiredRole = documentRoleFor(document.id);
       return requiredRole !== null && viewer.roles.includes(requiredRole);
     },

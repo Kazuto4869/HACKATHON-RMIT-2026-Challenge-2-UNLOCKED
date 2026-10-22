@@ -1,5 +1,5 @@
 {
-  "name": "securedocs-step5",
+  "name": "securedocs",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -8,21 +8,26 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test": "node --test tests/*.test.ts"
+    "test": "node --test tests/*.test.ts",
+    "verify:step6": "node scripts/verify-step6.mjs"
   },
   "dependencies": {
     "@tidecloak/nextjs": "0.14.40",
     "@tidecloak/verify": "0.14.33",
     "jose": "6.2.13",
+    "lucide-react": "^1.61.0",
     "next": "^16.4.2",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "server-only": "0.0.1"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "26.6.5",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
+    "postcss": "^8.5.31",
+    "tailwindcss": "^4.3.3",
     "typescript": "6.0.3"
   }
 }

@@ -21,6 +21,15 @@ export interface AccessRequest {
   documentId: string;
   requesterId: string;
   status: AccessRequestStatus;
+  createdAt: string;
+}
+
+export interface DocumentListItem extends DocumentMetadata {
+  accessStatus: "AVAILABLE" | "PENDING" | "LOCKED";
+}
+
+export interface AccessRequestItem extends AccessRequest {
+  document: DocumentMetadata;
 }
 
 export interface VerifiedViewer {
