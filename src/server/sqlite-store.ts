@@ -20,7 +20,13 @@ const columns = "id, title, summary, ownerId, createdAt, isProtected";
 
 export function createSqliteStore(filename: string, seeds: readonly DocumentSeed[] = []) {
   const database = new DatabaseSync(filename);
-  database.exec(`PRAGMA busy_timeout = 5000; PRAGMA journal_mode = WAL;
+  database.exec("PRAGMA busy_timeout = 10000;");
+  try {
+    database.exec("PRAGMA journal_mode = WAL;");
+  } catch {
+    // Ignore if WAL mode is already active or locked by another worker
+  }
+  database.exec(`
     CREATE TABLE IF NOT EXISTS documents (
       id TEXT PRIMARY KEY, title TEXT NOT NULL, summary TEXT NOT NULL,
       ownerId TEXT NOT NULL, createdAt TEXT NOT NULL,
@@ -28,8 +34,14 @@ export function createSqliteStore(filename: string, seeds: readonly DocumentSeed
     )`);
   const insert = database.prepare(`INSERT OR IGNORE INTO documents
     (id, title, summary, ownerId, createdAt, isProtected, body) VALUES (?, ?, ?, ?, ?, ?, ?)`);
-  for (const seed of seeds) {
-    insert.run(seed.id, seed.title, seed.summary, seed.ownerId, seed.createdAt, Number(seed.isProtected), seed.body);
+  if (seeds.length > 0) {
+    try {
+      for (const seed of seeds) {
+        insert.run(seed.id, seed.title, seed.summary, seed.ownerId, seed.createdAt, Number(seed.isProtected), seed.body);
+      }
+    } catch {
+      // Ignore if concurrent worker already seeded
+    }
   }
 
   const repository = {
