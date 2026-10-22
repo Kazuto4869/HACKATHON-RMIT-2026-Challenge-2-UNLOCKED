@@ -1,0 +1,411 @@
+{
+  "as_of": "2026-10-22",
+  "summary": "Curated optional upstream skills; none is silently installed",
+  "entries": [
+    {
+      "repository": "mukul975/Anthropic-Cybersecurity-Skills",
+      "skill": "detecting-ai-model-prompt-injection-attacks",
+      "path": "skills/detecting-ai-model-prompt-injection-attacks",
+      "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/main/skills/detecting-ai-model-prompt-injection-attacks",
+      "priority": "P0",
+      "type": "community",
+      "install_mode": "selective-review-required"
+    },
+    {
+      "repository": "mukul975/Anthropic-Cybersecurity-Skills",
+      "skill": "detecting-indirect-prompt-injection",
+      "path": "skills/detecting-indirect-prompt-injection",
+      "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/main/skills/detecting-indirect-prompt-injection",
+      "priority": "P0",
+      "type": "community",
+      "install_mode": "selective-review-required"
+    },
+    {
+      "repository": "mukul975/Anthropic-Cybersecurity-Skills",
+      "skill": "testing-prompt-injection-in-rag-pipelines",
+      "path": "skills/testing-prompt-injection-in-rag-pipelines",
+      "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/main/skills/testing-prompt-injection-in-rag-pipelines",
+      "priority": "P0",
+      "type": "community",
+      "install_mode": "selective-review-required"
+    },
+    {
+      "repository": "mukul975/Anthropic-Cybersecurity-Skills",
+      "skill": "securing-agentic-ai-tool-invocation",
+      "path": "skills/securing-agentic-ai-tool-invocation",
+      "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/main/skills/securing-agentic-ai-tool-invocation",
+      "priority": "P0",
+      "type": "community",
+      "install_mode": "selective-review-required"
+    },
+    {
+      "repository": "mukul975/Anthropic-Cybersecurity-Skills",
+      "skill": "auditing-mcp-servers-for-tool-poisoning",
+      "path": "skills/auditing-mcp-servers-for-tool-poisoning",
+      "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/main/skills/auditing-mcp-servers-for-tool-poisoning",
+      "priority": "P0",
+      "type": "community",
+      "install_mode": "selective-review-required"
+    },
+    {
+      "repository": "mukul975/Anthropic-Cybersecurity-Skills",
+      "skill": "assessing-vector-and-embedding-weaknesses",
+      "path": "skills/assessing-vector-and-embedding-weaknesses",
+      "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/main/skills/assessing-vector-and-embedding-weaknesses",
+      "priority": "P0",
+      "type": "community",
+      "install_mode": "selective-review-required"
+    },
+    {
+      "repository": "mukul975/Anthropic-Cybersecurity-Skills",
+      "skill": "detecting-data-and-model-poisoning",
+      "path": "skills/detecting-data-and-model-poisoning",
+      "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/main/skills/detecting-data-and-model-poisoning",
+      "priority": "P0",
+      "type": "community",
+      "install_mode": "selective-review-required"
+    },
+    {
+      "repository": "mukul975/Anthropic-Cybersecurity-Skills",
+      "skill": "implementing-llm-guardrails-for-security",
+      "path": "skills/implementing-llm-guardrails-for-security",
+      "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/main/skills/implementing-llm-guardrails-for-security",
+      "priority": "P0",
+      "type": "community",
+      "install_mode": "selective-review-required"
+    },
+    {
+      "repository": "mukul975/Anthropic-Cybersecurity-Skills",
+      "skill": "red-teaming-llms-with-garak",
+      "path": "skills/red-teaming-llms-with-garak",
+      "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/main/skills/red-teaming-llms-with-garak",
+      "priority": "P0",
+      "type": "community",
+      "install_mode": "selective-review-required"
+    },
+    {
+      "repository": "mukul975/Anthropic-Cybersecurity-Skills",
+      "skill": "continuous-llm-red-teaming-with-promptfoo",
+      "path": "skills/continuous-llm-red-teaming-with-promptfoo",
+      "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/main/skills/continuous-llm-red-teaming-with-promptfoo",
+      "priority": "P0",
+      "type": "community",
+      "install_mode": "selective-review-required"
+    },
+    {
+      "repository": "mukul975/Anthropic-Cybersecurity-Skills",
+      "skill": "testing-for-system-prompt-leakage",
+      "path": "skills/testing-for-system-prompt-leakage",
+      "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/main/skills/testing-for-system-prompt-leakage",
+      "priority": "P0",
+      "type": "community",
+      "install_mode": "selective-review-required"
+    },
+    {
+      "repository": "mukul975/Anthropic-Cybersecurity-Skills",
+      "skill": "conducting-api-security-testing",
+      "path": "skills/conducting-api-security-testing",
+      "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/main/skills/conducting-api-security-testing",
+      "priority": "P0",
+      "type": "community",
+      "install_mode": "selective-review-required"
+    },
+    {
+      "repository": "mukul975/Anthropic-Cybersecurity-Skills",
+      "skill": "implementing-secret-scanning-with-gitleaks",
+      "path": "skills/implementing-secret-scanning-with-gitleaks",
+      "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/main/skills/implementing-secret-scanning-with-gitleaks",
+      "priority": "P0",
+      "type": "community",
+      "install_mode": "selective-review-required"
+    },
+    {
+      "repository": "mukul975/Anthropic-Cybersecurity-Skills",
+      "skill": "implementing-semgrep-for-custom-sast-rules",
+      "path": "skills/implementing-semgrep-for-custom-sast-rules",
+      "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/main/skills/implementing-semgrep-for-custom-sast-rules",
+      "priority": "P0",
+      "type": "community",
+      "install_mode": "selective-review-required"
+    },
+    {
+      "repository": "mukul975/Anthropic-Cybersecurity-Skills",
+      "skill": "performing-container-security-scanning-with-trivy",
+      "path": "skills/performing-container-security-scanning-with-trivy",
+      "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/main/skills/performing-container-security-scanning-with-trivy",
+      "priority": "P0",
+      "type": "community",
+      "install_mode": "selective-review-required"
+    },
+    {
+      "repository": "mukul975/Anthropic-Cybersecurity-Skills",
+      "skill": "generating-and-analyzing-sboms",
+      "path": "skills/generating-and-analyzing-sboms",
+      "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/main/skills/generating-and-analyzing-sboms",
+      "priority": "P0",
+      "type": "community",
+      "install_mode": "selective-review-required"
+    },
+    {
+      "repository": "OWASP/secure-agent-playbook",
+      "skill": "agent-security-audit",
+      "path": "plugins/ai-security-skills/skills/agent-security-audit",
+      "url": "https://github.com/OWASP/secure-agent-playbook/tree/main/plugins/ai-security-skills/skills/agent-security-audit",
+      "priority": "P0",
+      "type": "foundation",
+      "install_mode": "read-upstream-play-required"
+    },
+    {
+      "repository": "OWASP/secure-agent-playbook",
+      "skill": "llm-risk-assess",
+      "path": "plugins/ai-security-skills/skills/llm-risk-assess",
+      "url": "https://github.com/OWASP/secure-agent-playbook/tree/main/plugins/ai-security-skills/skills/llm-risk-assess",
+      "priority": "P0",
+      "type": "foundation",
+      "install_mode": "read-upstream-play-required"
+    },
+    {
+      "repository": "OWASP/secure-agent-playbook",
+      "skill": "mcp-server-review",
+      "path": "plugins/ai-security-skills/skills/mcp-server-review",
+      "url": "https://github.com/OWASP/secure-agent-playbook/tree/main/plugins/ai-security-skills/skills/mcp-server-review",
+      "priority": "P0",
+      "type": "foundation",
+      "install_mode": "read-upstream-play-required"
+    },
+    {
+      "repository": "OWASP/secure-agent-playbook",
+      "skill": "prompt-injection-test",
+      "path": "plugins/ai-security-skills/skills/prompt-injection-test",
+      "url": "https://github.com/OWASP/secure-agent-playbook/tree/main/plugins/ai-security-skills/skills/prompt-injection-test",
+      "priority": "P0",
+      "type": "foundation",
+      "install_mode": "read-upstream-play-required"
+    },
+    {
+      "repository": "OWASP/secure-agent-playbook",
+      "skill": "agentic-ai-risk-assess",
+      "path": "plugins/ai-security-skills/skills/agentic-ai-risk-assess",
+      "url": "https://github.com/OWASP/secure-agent-playbook/tree/main/plugins/ai-security-skills/skills/agentic-ai-risk-assess",
+      "priority": "P0",
+      "type": "foundation",
+      "install_mode": "read-upstream-play-required"
+    },
+    {
+      "repository": "OWASP/secure-agent-playbook",
+      "skill": "ai-security-verification",
+      "path": "plugins/ai-security-skills/skills/ai-security-verification",
+      "url": "https://github.com/OWASP/secure-agent-playbook/tree/main/plugins/ai-security-skills/skills/ai-security-verification",
+      "priority": "P0",
+      "type": "foundation",
+      "install_mode": "read-upstream-play-required"
+    },
+    {
+      "repository": "promptfoo/promptfoo",
+      "skill": "promptfoo-evals",
+      "path": "plugins/promptfoo/skills/promptfoo-evals",
+      "url": "https://github.com/promptfoo/promptfoo/tree/main/plugins/promptfoo/skills/promptfoo-evals",
+      "priority": "P0",
+      "type": "vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "promptfoo/promptfoo",
+      "skill": "promptfoo-provider-setup",
+      "path": "plugins/promptfoo/skills/promptfoo-provider-setup",
+      "url": "https://github.com/promptfoo/promptfoo/tree/main/plugins/promptfoo/skills/promptfoo-provider-setup",
+      "priority": "P0",
+      "type": "vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "promptfoo/promptfoo",
+      "skill": "promptfoo-redteam-setup",
+      "path": "plugins/promptfoo/skills/promptfoo-redteam-setup",
+      "url": "https://github.com/promptfoo/promptfoo/tree/main/plugins/promptfoo/skills/promptfoo-redteam-setup",
+      "priority": "P0",
+      "type": "vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "promptfoo/promptfoo",
+      "skill": "promptfoo-redteam-run",
+      "path": "plugins/promptfoo/skills/promptfoo-redteam-run",
+      "url": "https://github.com/promptfoo/promptfoo/tree/main/plugins/promptfoo/skills/promptfoo-redteam-run",
+      "priority": "P0",
+      "type": "vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "huggingface/skills",
+      "skill": "huggingface-datasets",
+      "path": "skills/huggingface-datasets",
+      "url": "https://github.com/huggingface/skills/tree/main/skills/huggingface-datasets",
+      "priority": "P0",
+      "type": "vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "huggingface/skills",
+      "skill": "huggingface-community-evals",
+      "path": "skills/huggingface-community-evals",
+      "url": "https://github.com/huggingface/skills/tree/main/skills/huggingface-community-evals",
+      "priority": "P0",
+      "type": "vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "huggingface/skills",
+      "skill": "huggingface-gradio",
+      "path": "skills/huggingface-gradio",
+      "url": "https://github.com/huggingface/skills/tree/main/skills/huggingface-gradio",
+      "priority": "P0",
+      "type": "vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "huggingface/skills",
+      "skill": "hf-cli",
+      "path": "skills/hf-cli",
+      "url": "https://github.com/huggingface/skills/tree/main/skills/hf-cli",
+      "priority": "P0",
+      "type": "vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "huggingface/skills",
+      "skill": "train-sentence-transformers",
+      "path": "skills/train-sentence-transformers",
+      "url": "https://github.com/huggingface/skills/tree/main/skills/train-sentence-transformers",
+      "priority": "P0",
+      "type": "vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "huggingface/skills",
+      "skill": "huggingface-llm-trainer",
+      "path": "skills/huggingface-llm-trainer",
+      "url": "https://github.com/huggingface/skills/tree/main/skills/huggingface-llm-trainer",
+      "priority": "P0",
+      "type": "vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "langchain-ai/langchain-skills",
+      "skill": "langchain-rag",
+      "path": "config/skills/langchain-rag",
+      "url": "https://github.com/langchain-ai/langchain-skills/tree/main/config/skills/langchain-rag",
+      "priority": "P1",
+      "type": "vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "langchain-ai/langchain-skills",
+      "skill": "eval-engineering",
+      "path": "config/skills/eval-engineering",
+      "url": "https://github.com/langchain-ai/langchain-skills/tree/main/config/skills/eval-engineering",
+      "priority": "P1",
+      "type": "vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "langchain-ai/langchain-skills",
+      "skill": "langgraph-fundamentals",
+      "path": "config/skills/langgraph-fundamentals",
+      "url": "https://github.com/langchain-ai/langchain-skills/tree/main/config/skills/langgraph-fundamentals",
+      "priority": "P1",
+      "type": "vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "langchain-ai/langchain-skills",
+      "skill": "langgraph-human-in-the-loop",
+      "path": "config/skills/langgraph-human-in-the-loop",
+      "url": "https://github.com/langchain-ai/langchain-skills/tree/main/config/skills/langgraph-human-in-the-loop",
+      "priority": "P1",
+      "type": "vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "trailofbits/skills",
+      "skill": "insecure-defaults",
+      "path": "plugins/insecure-defaults/skills",
+      "url": "https://github.com/trailofbits/skills/tree/main/plugins/insecure-defaults/skills",
+      "priority": "P1",
+      "type": "security-vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "trailofbits/skills",
+      "skill": "static-analysis",
+      "path": "plugins/static-analysis/skills",
+      "url": "https://github.com/trailofbits/skills/tree/main/plugins/static-analysis/skills",
+      "priority": "P1",
+      "type": "security-vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "trailofbits/skills",
+      "skill": "differential-review",
+      "path": "plugins/differential-review/skills",
+      "url": "https://github.com/trailofbits/skills/tree/main/plugins/differential-review/skills",
+      "priority": "P1",
+      "type": "security-vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "trailofbits/skills",
+      "skill": "supply-chain-risk-auditor",
+      "path": "plugins/supply-chain-risk-auditor/skills",
+      "url": "https://github.com/trailofbits/skills/tree/main/plugins/supply-chain-risk-auditor/skills",
+      "priority": "P1",
+      "type": "security-vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "trailofbits/skills",
+      "skill": "second-opinion",
+      "path": "plugins/second-opinion/skills",
+      "url": "https://github.com/trailofbits/skills/tree/main/plugins/second-opinion/skills",
+      "priority": "P1",
+      "type": "security-vendor",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "fevziegeyurtsevenler/llm-security-skills",
+      "skill": "rag-security-review",
+      "path": "skills/rag-security-review",
+      "url": "https://github.com/fevziegeyurtsevenler/llm-security-skills/tree/main/skills/rag-security-review",
+      "priority": "P1",
+      "type": "community",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "fevziegeyurtsevenler/llm-security-skills",
+      "skill": "agent-skill-auditor",
+      "path": "skills/agent-skill-auditor",
+      "url": "https://github.com/fevziegeyurtsevenler/llm-security-skills/tree/main/skills/agent-skill-auditor",
+      "priority": "P1",
+      "type": "community",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "fevziegeyurtsevenler/llm-security-skills",
+      "skill": "prompt-injection-tester",
+      "path": "skills/prompt-injection-tester",
+      "url": "https://github.com/fevziegeyurtsevenler/llm-security-skills/tree/main/skills/prompt-injection-tester",
+      "priority": "P1",
+      "type": "community",
+      "install_mode": "manual-review"
+    },
+    {
+      "repository": "fevziegeyurtsevenler/llm-security-skills",
+      "skill": "mcp-security-review",
+      "path": "skills/mcp-security-review",
+      "url": "https://github.com/fevziegeyurtsevenler/llm-security-skills/tree/main/skills/mcp-security-review",
+      "priority": "P1",
+      "type": "community",
+      "install_mode": "manual-review"
+    }
+  ]
+}

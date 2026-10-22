@@ -1,0 +1,761 @@
+{
+  "version": "v4.2-C1-approved-model",
+  "generated_on": "2026-10-22",
+  "purpose": "Hackathon playbook with low-resource language scenarios; defaults are NOT organizer parameters.",
+  "global": {
+    "safe_mode": true,
+    "official_brief_overrides_defaults": true,
+    "max_skills_loaded_per_agent_phase": 4,
+    "model_seed": 42,
+    "external_skill_install": "manual-review-and-human-approval",
+    "external_code_execution": "disabled-until-reviewed",
+    "submissions": "human-approval-required",
+    "git_push_or_merge": "human-approval-required",
+    "paid_api_requests": "human-approval-required",
+    "allowed_security_targets": "owned-or-explicitly-authorized",
+    "private_data_in_prompts": "forbidden",
+    "network_requests": "only-when-challenge-rules-permit",
+    "result_verification": "run-tests-and-report-evidence",
+    "unknown_constraints": "TBD-not-assumed",
+    "working_tree_policy": "codex-and-agy-in-separate-worktrees"
+  },
+  "per_skill": {
+    "analyze-brief": {
+      "mode": "read-only-first",
+      "required_fields": [
+        "objective",
+        "input_schema",
+        "output_schema",
+        "metric",
+        "constraints",
+        "deadline",
+        "authorization_scope"
+      ],
+      "missing_value": "TBD"
+    },
+    "dataset-audit": {
+      "sample_rows_for_inspection": 1000,
+      "check_duplicates": true,
+      "check_missingness": true,
+      "check_leakage_risk": true,
+      "save_sensitive_raw_rows": false
+    },
+    "build-baseline": {
+      "strategy": "smallest-CPU-feasible",
+      "validation_fraction_if_iid_and_allowed": 0.2,
+      "split_policy": "respect-groups-time-and-official-holdout",
+      "stratify_if_classification": true,
+      "random_seed": 42,
+      "optimize_public_leaderboard_directly": false
+    },
+    "model-experiment": {
+      "compare_on_same_split": true,
+      "one_hypothesis_per_run": true,
+      "track_environment": true,
+      "promote_only_if_verified": true
+    },
+    "validate-submission": {
+      "schema_source": "official_sample_submission",
+      "strict_column_order": true,
+      "check_row_count": true,
+      "check_ids_and_order": true,
+      "check_finite_values": true,
+      "probability_bounds_if_required": [
+        0.0,
+        1.0
+      ]
+    },
+    "multilingual-nlp": {
+      "normalize_unicode": "NFC-if-compatible",
+      "report_per_language_metrics": true,
+      "evaluate_code_switching": true,
+      "fallback_baseline": "char-TFIDF-and-linear-classifier"
+    },
+    "low-resource-translation": {
+      "reference_metric": "official-metric-or-TBD",
+      "manual_review": "small-balanced-sample",
+      "check_named_entities_and_numbers": true,
+      "external_models_allowed": "only-if-rules-and-resources-allow"
+    },
+    "rag-build": {
+      "initial_retrieval": "lexical-BM25-or-TFIDF",
+      "top_k_starting_point": 5,
+      "citation_policy": "every-supported-claim-has-valid-source-id",
+      "no_source_fallback": "abstain",
+      "treat_retrieved_text_as_untrusted": true
+    },
+    "genai-evaluation": {
+      "eval_cases_starting_point": 30,
+      "include_failure_and_negative_cases": true,
+      "segmented_reporting": true,
+      "judge_model_scores": "calibrate-if-used"
+    },
+    "structured-outputs": {
+      "format": "JSON-validated-with-schema",
+      "schema_error_policy": "retry-locally-or-return-controlled-error",
+      "never_eval_generated_code": true
+    },
+    "jailbreak-detection": {
+      "baseline": "TFIDF-linear",
+      "threshold": "tune-on-validation-not-test",
+      "metrics": [
+        "ROC-AUC-if-applicable",
+        "PR-AUC",
+        "F1",
+        "FPR"
+      ]
+    },
+    "prompt-injection-defense": {
+      "threat_model_required": true,
+      "never_execute_untrusted_text_as_instructions": true,
+      "test_cases": "sanctioned-benign-plus-adversarial-fixtures",
+      "external_targets_allowed": false
+    },
+    "rag-security-review": {
+      "test_untrusted_document_boundary": true,
+      "test_citation_hijack": true,
+      "test_data_exfiltration_guard": true
+    },
+    "llm-redteam-harness": {
+      "authorized_test_scope_required": true,
+      "max_test_cases_per_run": 50,
+      "max_concurrency": 2,
+      "dummy_secrets_only": true,
+      "no-real-world-targeting": true,
+      "cost_cap_usd": 0
+    },
+    "security-evaluation": {
+      "separate_attack_success_from_model_quality": true,
+      "log_denominators": true,
+      "record_failed_queries": true
+    },
+    "ai-threat-model": {
+      "method": "assets-trust-boundaries-entry-points-abuse-cases-mitigations",
+      "assess_privileged_tools": true
+    },
+    "mcp-agent-security": {
+      "tool_access": "least-privilege",
+      "require_human_approval_for_side_effects": true,
+      "test_prompt_in_tool_response": true
+    },
+    "model-data-poisoning": {
+      "preserve_clean_baseline": true,
+      "audit_source_provenance": true,
+      "compare_against_unmodified_holdout": true
+    },
+    "api-security-review": {
+      "scope": "local-or-owned-test-app",
+      "check_authn_authz": true,
+      "check_schema_validation": true,
+      "avoid_active_scans_on_external_hosts": true
+    },
+    "webapp-security-review": {
+      "scope": "local-or-owned-test-app",
+      "check_xss": true,
+      "check_csrf_if_stateful": true,
+      "avoid_active_scans_on_external_hosts": true
+    },
+    "secrets-dependency-audit": {
+      "scan_before_commit": true,
+      "report_versions": true,
+      "no_automatic_dependency_upgrade": true
+    },
+    "static-review": {
+      "focus": "changed-files-first",
+      "severity_levels": [
+        "critical",
+        "high",
+        "medium",
+        "low"
+      ],
+      "require_reproduction_for_claims": true
+    },
+    "skill-supply-chain-audit": {
+      "required": [
+        "source_URL",
+        "pinned_commit",
+        "license_review",
+        "scripts_review",
+        "dependency_review"
+      ],
+      "auto_execute_installers": false
+    },
+    "security-report": {
+      "evidence": "sanitized",
+      "required_sections": [
+        "scope",
+        "method",
+        "findings",
+        "reproduction",
+        "limitations"
+      ]
+    },
+    "build-demo": {
+      "prototype": "smallest-usable",
+      "offline_fallback": true,
+      "secrets_in_source": false,
+      "smoke_test": true
+    },
+    "final-review": {
+      "checks": [
+        "official_rules",
+        "output_schema",
+        "unit_tests",
+        "security_scope",
+        "secrets",
+        "README",
+        "reproducibility"
+      ],
+      "release_requires_human_confirmation": true
+    },
+    "language-resource-triage": {
+      "language_identity": "ISO639-3-plus-script-when-verified",
+      "unknown_language": "TBD",
+      "default_model": "none-before-inventory",
+      "offline_baseline_required": true
+    },
+    "low-resource-corpus-curation": {
+      "keep_raw_immutable": true,
+      "check_near_duplicates": true,
+      "check_cross_split_duplicates": true,
+      "require_data_license_check": true,
+      "log_raw_rows_to_agents": false
+    },
+    "script-language-id": {
+      "unicode_normalization": "NFC-in-derived-column-only",
+      "strip_diacritics": false,
+      "guess_language_from_script": false,
+      "preserve_source_text": true
+    },
+    "cross-lingual-transfer": {
+      "fallback": "character-TFIDF-plus-linear",
+      "char_ngram_range": [
+        2,
+        5
+      ],
+      "seed": 42,
+      "encoder_download": "only_if_allowed",
+      "split": "grouped-or-language-held-out-when-applicable"
+    },
+    "few-shot-annotation": {
+      "freeze_gold_holdout_first": true,
+      "synthetic_labels_are_gold": false,
+      "annotation_batch_start": 20,
+      "human_review_required": true
+    },
+    "low-resource-ner": {
+      "metric_if_not_specified": "TBD",
+      "format": "organizer-specified-BIO/offsets",
+      "validate_offsets": true,
+      "default_baseline": "rules-or-provided-checkpoint"
+    },
+    "parallel-corpus-mt": {
+      "default_external_model": "none",
+      "preferred_benchmark": "organizer-first-FLORESplus-if-allowed",
+      "model_license_check": true,
+      "manual_review_min_examples_per_language": 5,
+      "extra_metric_if_appropriate": "chrF"
+    },
+    "backtranslation-augmentation": {
+      "enabled_by_default": false,
+      "keep_holdout_untouched": true,
+      "require_license_and_compute": true,
+      "synthetic_tag": true
+    },
+    "multilingual-retrieval": {
+      "initial_top_k": 5,
+      "initial_retrieval": "character-plus-word-TFIDF",
+      "embeddings": "optional-if-language-supported",
+      "require_citations": true
+    },
+    "code-switch-robustness": {
+      "paired_fixtures_per_language_pair_start": 10,
+      "report_consistency": true,
+      "mark_semantics_changed": "needs-review",
+      "preserve_diacritics": true
+    },
+    "low-resource-evaluation": {
+      "metric": "official-otherwise-TBD",
+      "report_micro_and_macro_by_language": true,
+      "small_group_threshold_for_caution": 20,
+      "report_denominators": true,
+      "blind_holdout": true
+    },
+    "low-resource-jailbreak-detection": {
+      "positive_class": "verify-from-brief",
+      "baseline": "character-TFIDF-plus-linear",
+      "include_benign_controls": true,
+      "evaluation_scope": "organizer-authorized-only",
+      "group_by_attack_family": true
+    },
+    "multilingual-attack-multiclass": {
+      "expected_task": "official-rmit-2026-c1-multiclass",
+      "label_schema": [
+        "BENIGN",
+        "JAILBREAK",
+        "PROMPT_INJECTION"
+      ],
+      "official_metric": "macro-F1",
+      "submission_contract": "6000 test ids in original order, CSV exactly id,label, 6 attempts",
+      "baseline": "fine-tune approved FacebookAI/xlm-roberta-base; TF-IDF-only diagnostic NOT submission compliant",
+      "split": "translation-family-or-template-group-aware-if-present-else-stratified",
+      "valid_fraction_if_appropriate": 0.2,
+      "seed": 42,
+      "max_features": 120000,
+      "per_class_and_language_eval": true,
+      "approved_models_only": true,
+      "auto_download_models": false,
+      "auto_submit": false,
+      "must_finetune": true,
+      "max_submissions": 6,
+      "backbone": "FacebookAI/xlm-roberta-base"
+    },
+    "rmit2026-approved-model-finetuning": {
+      "expected_task": "RMIT 2026 C1 approved pretrained encoder fine-tuning",
+      "approved_model": "FacebookAI/xlm-roberta-base",
+      "model_source": "Kaggle aisuko/xlm-roberta-base Transformers/default",
+      "num_labels": 3,
+      "metric": "macro-F1",
+      "max_submissions": 6,
+      "max_length": 256,
+      "learning_rate": 2e-05,
+      "epochs": 2,
+      "per_device_train_batch_size": 16,
+      "gradient_accumulation_steps": 2,
+      "validation_fraction": 0.2,
+      "seed": 42,
+      "loss": "sqrt-inverse-frequency-weighted-cross-entropy",
+      "expected_train_rows": 14000,
+      "expected_test_rows": 6000,
+      "output_columns": [
+        "id",
+        "label"
+      ],
+      "offline_model_only": true,
+      "auto_submit": false,
+      "auto_download": false
+    }
+  },
+  "scenarios": {
+    "unknown": {
+      "description": "Đề chưa phân loại / mới nhận đề",
+      "phases": {
+        "intake": [
+          "analyze-brief"
+        ],
+        "build": [
+          "build-baseline"
+        ],
+        "review": [
+          "final-review"
+        ],
+        "release": []
+      },
+      "notes": "Nếu không có dataset, thay build-baseline bằng build-demo hoặc một executable test phù hợp."
+    },
+    "classification": {
+      "description": "Kaggle tabular/text classification",
+      "phases": {
+        "intake": [
+          "analyze-brief",
+          "dataset-audit"
+        ],
+        "build": [
+          "build-baseline",
+          "model-experiment"
+        ],
+        "review": [
+          "final-review"
+        ],
+        "release": [
+          "validate-submission"
+        ]
+      },
+      "notes": "Đánh giá local trước; sample_submission là nguồn format chính thức."
+    },
+    "multilingual": {
+      "description": "Multilingual NLP / code-switching",
+      "phases": {
+        "intake": [
+          "analyze-brief",
+          "dataset-audit"
+        ],
+        "build": [
+          "multilingual-nlp",
+          "build-baseline"
+        ],
+        "review": [
+          "genai-evaluation",
+          "final-review"
+        ],
+        "release": [
+          "validate-submission"
+        ]
+      },
+      "notes": "Nếu output không phải CSV thì bỏ validate-submission."
+    },
+    "translation": {
+      "description": "Low-resource translation / generation",
+      "phases": {
+        "intake": [
+          "analyze-brief",
+          "dataset-audit"
+        ],
+        "build": [
+          "low-resource-translation"
+        ],
+        "review": [
+          "genai-evaluation",
+          "final-review"
+        ],
+        "release": [
+          "structured-outputs"
+        ]
+      },
+      "notes": "Schema có thể là text thay vì JSON; dùng structured-outputs chỉ khi đề yêu cầu."
+    },
+    "rag": {
+      "description": "RAG / grounded QA",
+      "phases": {
+        "intake": [
+          "analyze-brief",
+          "ai-threat-model"
+        ],
+        "build": [
+          "rag-build",
+          "genai-evaluation"
+        ],
+        "review": [
+          "rag-security-review",
+          "prompt-injection-defense"
+        ],
+        "release": [
+          "final-review"
+        ]
+      },
+      "notes": "Kiểm citation grounding và isolation của text được retrieve."
+    },
+    "llm_security": {
+      "description": "LLM robustness / authorized red team",
+      "phases": {
+        "intake": [
+          "analyze-brief",
+          "ai-threat-model"
+        ],
+        "build": [
+          "llm-redteam-harness",
+          "security-evaluation"
+        ],
+        "review": [
+          "prompt-injection-defense",
+          "security-report"
+        ],
+        "release": [
+          "final-review"
+        ]
+      },
+      "notes": "Chỉ thử trên scope chính thức; chặn tool nếu chưa xác nhận quyền và chi phí."
+    },
+    "agent_mcp": {
+      "description": "Agent tools / MCP app",
+      "phases": {
+        "intake": [
+          "analyze-brief",
+          "ai-threat-model"
+        ],
+        "build": [
+          "mcp-agent-security",
+          "structured-outputs"
+        ],
+        "review": [
+          "api-security-review",
+          "secrets-dependency-audit"
+        ],
+        "release": [
+          "final-review"
+        ]
+      },
+      "notes": "Ưu tiên tool allowlist và human approval cho side effects."
+    },
+    "webapp": {
+      "description": "Vibe coding webapp / API",
+      "phases": {
+        "intake": [
+          "analyze-brief"
+        ],
+        "build": [
+          "build-demo",
+          "structured-outputs"
+        ],
+        "review": [
+          "api-security-review",
+          "webapp-security-review"
+        ],
+        "release": [
+          "secrets-dependency-audit",
+          "final-review"
+        ]
+      },
+      "notes": "Không cần structured-outputs nếu app thuần frontend."
+    },
+    "poisoning": {
+      "description": "Training/retrieval dataset poisoning",
+      "phases": {
+        "intake": [
+          "analyze-brief",
+          "dataset-audit"
+        ],
+        "build": [
+          "model-data-poisoning",
+          "build-baseline"
+        ],
+        "review": [
+          "security-evaluation",
+          "final-review"
+        ],
+        "release": [
+          "validate-submission"
+        ]
+      },
+      "notes": "So sánh trên clean holdout; no unapproved corruption of external data."
+    },
+    "lrl_classification": {
+      "description": "Low-resource sentiment/intent/text classification",
+      "phases": {
+        "intake": [
+          "analyze-brief",
+          "language-resource-triage",
+          "low-resource-corpus-curation"
+        ],
+        "build": [
+          "script-language-id",
+          "cross-lingual-transfer"
+        ],
+        "review": [
+          "low-resource-evaluation",
+          "code-switch-robustness"
+        ],
+        "release": [
+          "validate-submission",
+          "final-review"
+        ]
+      },
+      "notes": "Use organizer metric; test char ngrams first, compare same-split transfer if permitted; output could be non-CSV."
+    },
+    "lrl_ner": {
+      "description": "Low-resource NER / entity extraction",
+      "phases": {
+        "intake": [
+          "analyze-brief",
+          "language-resource-triage",
+          "low-resource-corpus-curation"
+        ],
+        "build": [
+          "script-language-id",
+          "low-resource-ner"
+        ],
+        "review": [
+          "low-resource-evaluation",
+          "few-shot-annotation"
+        ],
+        "release": [
+          "final-review",
+          "validate-submission"
+        ]
+      },
+      "notes": "Span vs token evaluation matters; validate BIO offsets and exact submission format."
+    },
+    "lrl_mt": {
+      "description": "Low-resource machine translation / bitext",
+      "phases": {
+        "intake": [
+          "analyze-brief",
+          "language-resource-triage",
+          "low-resource-corpus-curation"
+        ],
+        "build": [
+          "parallel-corpus-mt",
+          "low-resource-translation"
+        ],
+        "review": [
+          "low-resource-evaluation"
+        ],
+        "release": [
+          "final-review"
+        ]
+      },
+      "notes": "NLLB/IndicTrans are optional and often large; verify language codes, license, access; backtranslation only after baseline and permit."
+    },
+    "lrl_rag": {
+      "description": "Cross-lingual retrieval and grounded QA",
+      "phases": {
+        "intake": [
+          "analyze-brief",
+          "language-resource-triage",
+          "ai-threat-model"
+        ],
+        "build": [
+          "multilingual-retrieval",
+          "rag-build"
+        ],
+        "review": [
+          "low-resource-evaluation",
+          "rag-security-review",
+          "prompt-injection-defense"
+        ],
+        "release": [
+          "final-review"
+        ]
+      },
+      "notes": "Per-language retrieval recall, citations and untrusted-document handling; LaBSE is optional."
+    },
+    "lrl_no_labels": {
+      "description": "Low-resource, missing labels or very small samples",
+      "phases": {
+        "intake": [
+          "analyze-brief",
+          "language-resource-triage",
+          "low-resource-corpus-curation"
+        ],
+        "build": [
+          "few-shot-annotation",
+          "cross-lingual-transfer"
+        ],
+        "review": [
+          "low-resource-evaluation"
+        ],
+        "release": [
+          "final-review"
+        ]
+      },
+      "notes": "Do not score against invented gold labels; annotations require human review and organizer permission."
+    },
+    "lrl_code_switch": {
+      "description": "Code-switched and multi-script robustness",
+      "phases": {
+        "intake": [
+          "analyze-brief",
+          "language-resource-triage"
+        ],
+        "build": [
+          "script-language-id",
+          "multilingual-nlp"
+        ],
+        "review": [
+          "code-switch-robustness",
+          "low-resource-evaluation"
+        ],
+        "release": [
+          "final-review"
+        ]
+      },
+      "notes": "Always test with original and transformed pairs; document whether labels remain valid."
+    },
+    "lrl_jailbreak": {
+      "description": "Multilingual jailbreak/prompt-injection detection",
+      "phases": {
+        "intake": [
+          "analyze-brief",
+          "language-resource-triage",
+          "ai-threat-model"
+        ],
+        "build": [
+          "low-resource-jailbreak-detection",
+          "cross-lingual-transfer"
+        ],
+        "review": [
+          "code-switch-robustness",
+          "low-resource-evaluation",
+          "prompt-injection-defense"
+        ],
+        "release": [
+          "validate-submission",
+          "final-review"
+        ]
+      },
+      "notes": "Prompt intent, attack success, and injected-document origin are not interchangeable labels; tests must be authorized."
+    },
+    "rmit2026_c1_multiclass": {
+      "description": "OFFICIAL C1 three-class multilingual attack prompt classification, macro-F1, approved-model fine-tuning mandatory",
+      "phases": {
+        "intake": [
+          "analyze-brief",
+          "language-resource-triage",
+          "dataset-audit"
+        ],
+        "build": [
+          "rmit2026-approved-model-finetuning",
+          "multilingual-attack-multiclass"
+        ],
+        "review": [
+          "low-resource-evaluation",
+          "validate-submission",
+          "final-review"
+        ],
+        "release": [
+          "final-review"
+        ]
+      },
+      "notes": "Use 1 approved Kaggle pretrained backbone, fine-tune; never final-submit standalone TF-IDF. Verify 6000 rows exact id,label; 6 submission attempts."
+    }
+  },
+  "upstream_policy": {
+    "install_default": false,
+    "use_local_skill_first": true,
+    "catalog": "docs/UPSTREAM_CATALOG.csv",
+    "allowlist_sample": [
+      {
+        "scenario": "rag",
+        "repository": "langchain-ai/langchain-skills",
+        "skill": "langchain-rag",
+        "why": "nếu thực sự cần LangChain stack"
+      },
+      {
+        "scenario": "classification",
+        "repository": "huggingface/skills",
+        "skill": "huggingface-datasets",
+        "why": "nếu cần datasets hub và dataset operations"
+      },
+      {
+        "scenario": "llm_security",
+        "repository": "promptfoo/promptfoo",
+        "skill": "promptfoo-evals",
+        "why": "nếu promptfoo được cho phép và có runtime"
+      },
+      {
+        "scenario": "llm_security",
+        "repository": "OWASP/secure-agent-playbook",
+        "skill": "prompt-injection-test",
+        "why": "tham khảo threat playbook để QA"
+      },
+      {
+        "scenario": "webapp",
+        "repository": "trailofbits/skills",
+        "skill": "static-analysis",
+        "why": "nếu có thời gian và static scan hợp lệ"
+      }
+    ],
+    "lrl_recommended_upstream_skills": [
+      {
+        "repo": "huggingface/skills",
+        "path": "skills/huggingface-datasets/SKILL.md",
+        "use": "find dataset metadata without unsafe downloads"
+      },
+      {
+        "repo": "huggingface/skills",
+        "path": "skills/huggingface-community-evals/SKILL.md",
+        "use": "optional model evaluation stack"
+      },
+      {
+        "repo": "huggingface/skills",
+        "path": "skills/huggingface-local-models/SKILL.md",
+        "use": "optional offline model inference"
+      },
+      {
+        "repo": "langchain-ai/langchain-skills",
+        "path": "config/skills/langchain-rag/SKILL.md",
+        "use": "optional RAG code base"
+      }
+    ]
+  }
+}

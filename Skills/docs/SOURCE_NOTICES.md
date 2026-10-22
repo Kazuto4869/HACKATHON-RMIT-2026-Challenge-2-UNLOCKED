@@ -1,0 +1,3 @@
+# Sources and licensing
+
+The 20 new skills in this pack are original project-specific workflows; they link to upstream examples for further study. The 6 pre-existing skills originate from the earlier RMIT playbook. Third-party source code/skill text is not redistributed or automatically installed. All external packages remain subject to their individual licenses. Repository existence and sampled skill paths were checked at preparation time; the full optional catalog is a curated shortlist, not a guarantee that every path remains available or safe. Review each source and its commit before installation.

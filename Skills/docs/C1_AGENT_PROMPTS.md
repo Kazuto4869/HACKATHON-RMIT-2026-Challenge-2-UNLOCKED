@@ -1,0 +1,7 @@
+# Reusable prompts for Codex and Antigravity
+
+## Codex: first run
+Read `AGENTS.md`, `docs/RMIT_2026_LIVE_BRIEF.md`, `docs/C1_APPROVED_MODEL_RUNBOOK.md` and skill `rmit2026-approved-model-finetuning`. This is the LIVE Kaggle 2026 C1 challenge: 14,000 labeled examples, Portuguese/French/Italian/English, 3 exact classes, macro-F1. Fine-tune ONE approved Kaggle-hosted model; primary `FacebookAI/xlm-roberta-base`. Standalone TF-IDF is disallowed as final solution. Inspect actual train/test and attached Kaggle model files first. Adapt `notebooks/C1_XLMR_Approved_Finetune.ipynb` to exact mounted paths; report dataset counts, label-language cross table, validation macro-F1 and confusion matrix. Generate `/kaggle/working/submission.csv` with exactly 6,000 unique test IDs and exact `id,label` columns; validate. Never assume successful GPU training or Kaggle submission without logs.
+
+## AGY: independent QA
+Act as independent compliance checker for RMIT 2026 C1. Review `docs/RMIT_2026_LIVE_BRIEF.md`, approved model identity, offline loading, train/validation leakage, macro-F1 implementation, rare PROMPT_INJECTION results and strict CSV schema. Check the notebook names the approved model at the top and no non-approved checkpoint is used. Run `tools/c1_submission_validator.py` against actual `test.csv` and `submission.csv`. Do not alter training notebook without B approval. Record findings with severity, exact file/line and reproducible steps. Never submit without human approval.

@@ -1,0 +1,52 @@
+{
+  "competition": "RMIT HACKATHON 2026 — Challenge 1",
+  "source": "User-provided official Kaggle competition Description, Challenge, Evaluation on 2026-10-22",
+  "task": "Multilingual multi-class prompt attack classification",
+  "allowed_languages": [
+    "Portuguese",
+    "French",
+    "Italian",
+    "English"
+  ],
+  "train_rows": 14000,
+  "test_rows": 6000,
+  "train_columns": [
+    "id",
+    "text",
+    "language",
+    "label"
+  ],
+  "classes": [
+    "BENIGN",
+    "JAILBREAK",
+    "PROMPT_INJECTION"
+  ],
+  "metric": "macro_f1",
+  "max_submissions": 6,
+  "submission_columns": [
+    "id",
+    "label"
+  ],
+  "approved_models": [
+    "distilbert/distilbert-base-multilingual-cased",
+    "jhu-clsp/mmBERT-small",
+    "jhu-clsp/mmBERT-base",
+    "FacebookAI/xlm-roberta-base",
+    "FacebookAI/xlm-roberta-large",
+    "google/rembert",
+    "protectai/deberta-v3-base-prompt-injection-v2",
+    "patronus-studio/wolf-defender-prompt-injection",
+    "ibm-granite/granite-3.3-2b-instruct",
+    "mistralai/Mistral-7B-Instruct-v0.3"
+  ],
+  "model_requirement": "Fine-tune ONE approved pretrained backbone. No other pretrained backbone.",
+  "starting_choice": "FacebookAI/xlm-roberta-base",
+  "model_source": "https://www.kaggle.com/models/aisuko/xlm-roberta-base/Transformers/default",
+  "class_distribution_reported": {
+    "BENIGN": 0.62,
+    "JAILBREAK": 0.31,
+    "PROMPT_INJECTION": 0.07
+  },
+  "first_valid_submission_full_completion_marks": true,
+  "team_notebook_pattern": "<university>_<campus>_<team>_C1"
+}
