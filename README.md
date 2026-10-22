@@ -4,17 +4,17 @@
 
 ## Project overview
 
-**Vision & originality.** SecureDocs lets people discover useful document metadata while sensitive note bodies remain unavailable until a future TideCloak-authorized permission grant is verified by the server.
+**Vision & originality.** SecureDocs lets people discover useful document metadata while sensitive note bodies remain unavailable until a TideCloak access token is verified by the server and carries the exact role for that document.
 
 **Trust constraint.** A conventional privileged administrator could grant access alone. The target STEP 5 demonstration uses TideCloak QEA so a document-role change is not committed by one administrator acting unilaterally.
 
 **Value & impact.** Research, community, and review teams can share enough context for someone to request access without prematurely exposing the underlying material.
 
-**Why TideCloak matters.** TideCloak is intended to govern the permission grant and supply the verified identity/role used by the server. STEP 4 does not claim this integration is complete: its adapter denies every protected read until real verification replaces it.
+**Why TideCloak matters.** STEP 5 uses the official TideCloak Next.js adapter for browser authentication and server-side JWT verification. Client roles map one-to-one to protected documents. The app records access requests, but only a real Tide console role proposal and Guardian quorum can grant access.
 
-**Prototype & storytelling.** The responsive app includes a synthetic document register, a locked-document screen, a public reader, an in-memory demo-note form, an honest authentication-status page, and APIs that return metadata while denying protected content.
+**Prototype & storytelling.** The responsive app includes a synthetic document register, a locked-document screen, a public reader, an in-memory demo-note form, a truthful authentication-status page, and APIs that keep restricted bodies server-side.
 
-## STEP 4 application
+## STEP 5 application
 
 Requirements: Node.js 20.9 or later and npm. The verified implementation used Node.js 24.21.0 and npm 11.19.0.
 
@@ -26,20 +26,24 @@ npm run build
 npm run dev
 ```
 
-Open <http://127.0.0.1:3000/>. If that port is occupied, run `npm run dev -- --port 3122` and use the printed URL.
+Copy `.env.example` to `.env.local` and confirm the public realm/client values against the downloaded `securedocs-client` adapter once a realm is configured. Open <http://127.0.0.1:3000/>; the configured redirect URI and silent-check URI deliberately use that exact origin.
 
-The create-note screen is deliberately an in-memory synthetic demo: refreshing removes the draft. Do not enter real or confidential information. The app does not commit `tidecloak.json`, tokens, or credentials, and it does not yet provide TideCloak sign-in. Protected API reads return `401` while the STEP 4 deny-by-default adapter is active. See [the STEP 4 implementation report](docs/STEP4_IMPLEMENTATION_REPORT.md) for evidence and limitations.
+The create-note screen and access-request store are deliberately in-memory synthetic demos. Refreshing removes a note draft, and restarting the server removes pending requests. Do not enter real or confidential information. The app does not commit `tidecloak.json`, tokens, or credentials. Missing, malformed, forged, expired, wrong-issuer, and wrong-client tokens fail closed; a verified token still needs the matching client role.
+
+At the current handoff, Docker Desktop's Linux engine runs but contains no SecureDocs container or volume. STEP 3 was verified under a different Windows profile (`C:\Users\LENOVO`), whose data is not present on this host. The user authorized a replacement realm, but this branch contains only non-realm code; live login and Guardian/QEA are not yet verified. See [the STEP 5 implementation report](docs/STEP5_IMPLEMENTATION_REPORT.md) for exact evidence and continuation steps.
 
 ## SecureDocs local development (STEP 3)
 
 Windows PowerShell and VS Code terminal; development only. See the
 [environment verification report](docs/STEP3_ENVIRONMENT_REPORT.md) for tested
-results and authentication readiness. STEP 4 adds the application above while
-preserving the verified TideCloak environment setup in this section.
+results and the historical authentication-ready state. The current Docker engine
+was inspected and found empty; creating a replacement realm was authorized but
+is deferred while the non-realm STEP 5 branch is published.
 
-Current verified realm: `securedocs`. Its linked Tide administrator can use
+Realm verified during STEP 3: `securedocs`. Its linked Tide administrator used
 <http://127.0.0.1:8080/realms/securedocs/tide-console/>. Enrollment and a console
-login session are verified; the three-Guardian quorum is not configured yet.
+login session were verified then; the current runtime and three-Guardian quorum
+are not yet re-verified.
 
 1. Start Docker Desktop with its Linux/WSL 2 engine. Verify `docker version`,
    `docker info`, and `docker ps` succeed; a CLI version alone is insufficient.

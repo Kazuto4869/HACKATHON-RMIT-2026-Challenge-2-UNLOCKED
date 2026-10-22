@@ -1,8 +1,9 @@
 import Link from "next/link";
 
 import { DocumentIcon, PlusIcon, ShieldIcon } from "./icons";
+import { AuthControls } from "./auth-controls";
 
-export function SiteHeader() {
+export function SiteHeader({ authConfigured }: { authConfigured: boolean }) {
   return (
     <header className="site-header">
       <Link className="brand" href="/" aria-label="SecureDocs document dashboard">
@@ -22,6 +23,7 @@ export function SiteHeader() {
         <Link href="/account">
           <ShieldIcon /> Account status
         </Link>
+        <AuthControls configured={authConfigured} />
       </nav>
     </header>
   );

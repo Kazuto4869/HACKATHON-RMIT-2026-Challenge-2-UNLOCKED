@@ -1,12 +1,24 @@
 import "server-only";
 
+import { verifyTideCloakToken } from "@tidecloak/nextjs/server";
+
 import { createDocumentService } from "./document-service.ts";
 import { documentRepository } from "./document-store.server.ts";
-import { step4DenyByDefaultAdapter } from "./tide-authorization.ts";
+import {
+  createTideAuthorizationAdapter,
+  denyByDefaultAdapter,
+} from "./tide-authorization.ts";
+import { loadTideCloakConfig } from "./tidecloak-config.server.ts";
+
+const tideCloakConfig = loadTideCloakConfig();
+
+export const tideAuthorization = tideCloakConfig
+  ? createTideAuthorizationAdapter(tideCloakConfig, verifyTideCloakToken)
+  : denyByDefaultAdapter;
 
 export const documentService = createDocumentService(
   documentRepository,
-  step4DenyByDefaultAdapter.canReadDocument,
+  tideAuthorization.canReadDocument,
 );
 
-export const tideAuthorization = step4DenyByDefaultAdapter;
+export const tideCloakConfigured = tideCloakConfig !== null;

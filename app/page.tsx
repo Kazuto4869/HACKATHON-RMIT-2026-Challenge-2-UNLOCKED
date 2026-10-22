@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowIcon, LockIcon, PlusIcon, ShieldIcon } from "../components/icons";
 import { StatusChip } from "../components/status-chip";
 import { documentService } from "../src/server/documents.server";
+import { loadTideCloakConfig } from "../src/server/tidecloak-config.server";
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("en-AU", {
@@ -16,6 +17,7 @@ function formatDate(value: string) {
 export default async function DashboardPage() {
   const documents = await documentService.listDocuments();
   const protectedCount = documents.filter((document) => document.isProtected).length;
+  const configured = loadTideCloakConfig() !== null;
 
   return (
     <>
@@ -43,13 +45,14 @@ export default async function DashboardPage() {
           <ShieldIcon />
         </span>
         <div>
-          <strong>Deny-by-default is active</strong>
+          <strong>Verified roles or no protected content</strong>
           <p>
-            In-app TideCloak verification is not connected yet. Every protected body read
-            is denied; STEP 5 will replace the authorization adapter with verified roles.
+            {configured
+              ? "The official SDK boundary is configured. The server returns a protected body only after token verification and the matching document role."
+              : "The TideCloak adapter is not configured. Every protected read remains denied by default."}
           </p>
         </div>
-        <StatusChip tone="pending">STEP 5 pending</StatusChip>
+        <StatusChip tone="pending">QEA proof pending</StatusChip>
       </section>
 
       <section className="register-section" aria-labelledby="register-title">
