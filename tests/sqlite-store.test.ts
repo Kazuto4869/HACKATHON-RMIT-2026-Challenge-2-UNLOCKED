@@ -17,6 +17,7 @@ test("notes and requests survive reopening without leaking bodies or crossing us
   const reopened = createSqliteStore(filename);
   context.after(() => {
     reopened.close();
+    assert.ok(directory.startsWith(join(tmpdir(), "securedocs-test-")));
     rmSync(directory, { recursive: true, force: true });
   });
   const metadata = await reopened.repository.listMetadata();

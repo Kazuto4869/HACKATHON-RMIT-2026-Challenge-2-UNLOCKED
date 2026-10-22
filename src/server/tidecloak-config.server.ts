@@ -1,4 +1,6 @@
 import type { TideCloakRuntimeConfig } from "../domain/tidecloak.ts";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
 type PublicEnvironment = Readonly<Record<string, string | undefined>>;
 
@@ -38,5 +40,29 @@ export function loadTideCloakConfigFromEnv(
 }
 
 export function loadTideCloakConfig(): TideCloakRuntimeConfig | null {
-  return loadTideCloakConfigFromEnv(process.env);
+  const config = loadTideCloakConfigFromEnv(process.env);
+  if (!config) return null;
+  try {
+    return mergeTideCloakAdapter(config, JSON.parse(readFileSync(join(process.cwd(), "tidecloak.json"), "utf8").replace(/^\uFEFF/, "")));
+  } catch { return null; }
+}
+
+export function mergeTideCloakAdapter(config: TideCloakRuntimeConfig, input: unknown): TideCloakRuntimeConfig | null {
+  if (typeof input !== "object" || input === null) return null;
+  const adapter = input as Record<string, unknown>;
+  if (adapter.realm !== config.realm || adapter.resource !== config.resource || adapter["public-client"] !== true) return null;
+  const jwk = adapter.jwk as { keys?: unknown } | undefined;
+  if (!jwk || !Array.isArray(jwk.keys) || !jwk.keys.length) return null;
+  const keys: Record<string, unknown>[] = [];
+  for (const key of jwk.keys) {
+    if (typeof key !== "object" || key === null || !["OKP", "EC", "RSA"].includes(key.kty) ||
+        ["d", "p", "q", "dp", "dq", "qi", "oth", "k"].some((field) => Object.hasOwn(key, field))) return null;
+    keys.push(key);
+  }
+  const result: TideCloakRuntimeConfig = { ...config, jwk: { keys } };
+  const publicFields = ["homeOrkUrl", "vendorId", "gVVK", "vvkId", "orkUrl", "payerPublic", "obfGVVK", "gVRKCertificate", "thresholdT", "thresholdN", "logoUrl", "backgroundUrl", "ssl-required"];
+  for (const [name, value] of Object.entries(adapter)) {
+    if ((publicFields.includes(name) || name.startsWith("client-origin-auth-")) && (typeof value === "string" || typeof value === "number")) result[name] = value;
+  }
+  return result;
 }

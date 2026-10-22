@@ -1,5 +1,7 @@
 # STEP 5 implementation report — SecureDocs
 
+> Historical branch snapshot. The integrated Windows checkout was subsequently re-verified with the original running container and volume intact. See [the current QEA integration report](STEP5_QEA_INTEGRATION_REPORT.md) and [Step 6 report](STEP6_CORE_FEATURES_REPORT.md). The missing-container account below describes the source branch's environment, not the current host.
+
 Verified on 22 October 2026, Asia/Bangkok (UTC+7).
 
 ## Outcome

@@ -52,5 +52,6 @@ describe("application access requests", () => {
     assert.equal(store.list("requester-01").length, 2);
     assert.equal(store.list("requester-02").length, 1);
     assert.deepEqual(store.list("unrelated-user"), []);
+    assert.equal(store.listForReview().length, 3);
   });
 });

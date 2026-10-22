@@ -12,7 +12,7 @@ import { loadTideCloakConfig } from "./tidecloak-config.server.ts";
 
 const tideCloakConfig = loadTideCloakConfig();
 
-export const tideAuthorization = tideCloakConfig
+export const tideAuthorization = tideCloakConfig?.jwk
   ? createTideAuthorizationAdapter(tideCloakConfig, verifyTideCloakToken)
   : denyByDefaultAdapter;
 
@@ -22,3 +22,4 @@ export const documentService = createDocumentService(
 );
 
 export const tideCloakConfigured = tideCloakConfig !== null;
+export const appOrigin = tideCloakConfig ? new URL(tideCloakConfig.redirectUri).origin : "";

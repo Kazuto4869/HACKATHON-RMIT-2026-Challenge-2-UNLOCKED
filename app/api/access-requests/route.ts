@@ -6,7 +6,10 @@ import {
 import {
   documentService,
   tideAuthorization,
+  appOrigin,
 } from "../../../src/server/documents.server";
+import { isAllowedWriteOrigin } from "../../../src/server/write-origin";
+import { documentRoleFor } from "../../../src/server/tide-authorization";
 
 const responseHeaders = {
   "Cache-Control": "private, no-store",
@@ -28,14 +31,21 @@ export async function GET(request: Request) {
     });
   }
 
-  const documentId = new URL(request.url).searchParams.get("documentId")?.trim();
+  const query = new URL(request.url).searchParams;
+  const guardian = query.get("scope") === "guardian";
+  if (guardian && !viewer.isGuardian) {
+    return NextResponse.json({ error: "A Tide administrator account is required." }, { status: 403, headers: responseHeaders });
+  }
+  const documentId = query.get("documentId")?.trim();
   if (!documentId) {
     const documents = await documentService.listDocuments();
-    const requests = await Promise.all(accessRequestStore.list(viewer.subject).map(async (accessRequest) => {
+    const records = guardian ? accessRequestStore.listForReview() : accessRequestStore.list(viewer.subject);
+    const requests = await Promise.all(records.map(async (accessRequest) => {
       const document = documents.find((item) => item.id === accessRequest.documentId);
       if (!document) return null;
       return { ...accessRequest, document,
-        status: await tideAuthorization.canReadDocument(viewer, document) ? "GRANTED" : "PENDING",
+        status: !guardian && await tideAuthorization.canReadDocument(viewer, document) ? "GRANTED" : "PENDING",
+        ...(guardian ? { readerRole: documentRoleFor(document.id) } : {}),
       };
     }));
     return NextResponse.json({ requests: requests.filter((item) => item !== null) }, { headers: responseHeaders });
@@ -61,8 +71,7 @@ export async function POST(request: Request) {
     });
   }
 
-  const origin = request.headers.get("origin");
-  if (origin && origin !== new URL(request.url).origin) {
+  if (!isAllowedWriteOrigin(request, appOrigin)) {
     return NextResponse.json({ error: "Cross-origin writes are not allowed." }, { status: 403, headers: responseHeaders });
   }
 

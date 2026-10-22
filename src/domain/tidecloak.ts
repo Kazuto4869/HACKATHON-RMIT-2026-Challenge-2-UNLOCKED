@@ -1,4 +1,5 @@
 export interface TideCloakRuntimeConfig {
+  [key: string]: unknown;
   realm: string;
   "auth-server-url": string;
   resource: string;
@@ -6,4 +7,5 @@ export interface TideCloakRuntimeConfig {
   "confidential-port": 0;
   redirectUri: string;
   silentCheckSsoRedirectUri: string;
+  jwk?: { keys: readonly Record<string, unknown>[] };
 }

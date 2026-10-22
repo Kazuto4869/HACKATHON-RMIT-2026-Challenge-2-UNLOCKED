@@ -24,15 +24,15 @@ The product separates an application access request from the authoritative, quor
 
 ## Operating Context
 
-A hackathon evaluator follows a short desktop or mobile journey through a document register, a locked detail screen, a demo note form, and an authentication-readiness status page.
+A hackathon evaluator follows a short desktop or mobile browser journey through documents, sign-in, note creation, an access request and a protected reader. Administrators review actual permission changes in Tide Console.
 
 ## Capabilities and Constraints
 
-STEP 5 uses synthetic data only. Protected bodies never enter metadata payloads, browser storage, or unauthorized responses. An application request stays `PENDING`; it never assigns a role or impersonates Guardian approval. The existing `securedocs` realm is preserved, while live three-Guardian and 2-of-3 verification requires the local Docker engine.
+STEP 6 uses synthetic data only. Notes and idempotent per-user requests persist in server-side SQLite. Protected bodies never enter metadata payloads, browser storage, or unauthorized responses. Authenticated owners read their own notes; others require a verified document-specific Tide client role. An application request never assigns a role or impersonates Guardian approval. Guardian approvals happen in Tide Console; the website has no custom approval engine. SQLite is plaintext, not E2EE. No upload, production deployment, or Step 7 hardening is included.
 
 ## Evidence on Hand
 
-`docs/STEP3_ENVIRONMENT_REPORT.md` records a previously working local TideCloak realm and one linked administrator. The STEP 5 code boundary and negative API cases are verified. No live application-user login, three-Guardian quorum, successful governed role grant, or encrypted document flow is claimed until it is reproduced against the restored realm.
+The current host has the existing running TideCloak container, realm and one linked administrator. Step 5/6 code boundaries, persistence and negative API checks are documented in `docs/STEP6_CORE_FEATURES_REPORT.md`. A live application login and 0/2 → 1/2 → 2/2 grant remain manual acceptance gates. Local test signing keys verify application cryptography only; they are not evidence of Tide enrollment or quorum.
 
 ## Product Principles
 

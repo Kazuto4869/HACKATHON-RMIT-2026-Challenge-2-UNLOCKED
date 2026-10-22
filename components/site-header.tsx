@@ -32,7 +32,7 @@ export function SiteHeader({ authConfigured }: { authConfigured: boolean }) {
           return (
             <Link
               aria-current={active ? "page" : undefined}
-              className={`flex min-h-10 shrink-0 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-colors ${
+              className={`flex min-h-11 shrink-0 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-colors ${
                 active
                   ? "bg-blue-50 text-blue-700"
                   : "text-slate-600 hover:bg-white hover:text-slate-900"

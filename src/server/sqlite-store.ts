@@ -20,7 +20,7 @@ const columns = "id, title, summary, ownerId, createdAt, isProtected";
 
 export function createSqliteStore(filename: string, seeds: readonly DocumentSeed[] = []) {
   const database = new DatabaseSync(filename);
-  database.exec(`PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;
+  database.exec(`PRAGMA busy_timeout = 5000; PRAGMA journal_mode = WAL;
     CREATE TABLE IF NOT EXISTS documents (
       id TEXT PRIMARY KEY, title TEXT NOT NULL, summary TEXT NOT NULL,
       ownerId TEXT NOT NULL, createdAt TEXT NOT NULL,

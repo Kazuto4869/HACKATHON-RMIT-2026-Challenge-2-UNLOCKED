@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: securedocs-web
+    runtime: node
+    plan: free
+    branch: codex/securedocs-step6-render
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm run start
+    healthCheckPath: /api/documents
+    envVars:
+      - key: NODE_VERSION
+        value: 24.11.0
+      - key: NODE_ENV
+        value: production

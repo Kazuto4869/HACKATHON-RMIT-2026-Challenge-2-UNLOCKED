@@ -8,13 +8,11 @@ import { tideCloakConfigured } from "../../src/server/documents.server";
 
 export const metadata: Metadata = { title: "Account status" };
 
-const items = [
-  { title: "Local TideCloak realm", detail: "The securedocs realm was verified in STEP 3.", status: "Verified", icon: Check, ready: true },
-  { title: "Tide administrator", detail: "One linked administrator and console session verified.", status: "Verified", icon: Check, ready: true },
-  { title: "Guardian access", detail: "The three-Guardian approval flow still needs a live test.", status: "Not verified", icon: LockKeyhole },
-];
-
 export default function AccountPage() {
+  const items = [
+    { title: "Sign-in settings", detail: tideCloakConfigured ? "A public Tide adapter is loaded. Your session status appears below." : "The local Tide adapter still needs setup.", status: tideCloakConfigured ? "Loaded" : "Setup needed", icon: Check, ready: tideCloakConfigured },
+    { title: "Guardian approvals", detail: "Managed in TideCloak. The live three-Guardian flow still needs verification.", status: "Not verified", icon: LockKeyhole, ready: false },
+  ];
   return (
     <div className="mx-auto max-w-3xl space-y-8">
       <Link className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-700" href="/">

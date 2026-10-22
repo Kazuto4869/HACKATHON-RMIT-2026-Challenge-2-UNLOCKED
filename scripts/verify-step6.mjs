@@ -23,6 +23,7 @@ await json("/api/documents/unknown-document", 404);
 await json("/api/documents?mine=1", 401);
 await json("/api/documents", 401, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title: "Unauthorized note", summary: "Not saved", body: "Not saved", isProtected: true }) });
 await json("/api/access-requests", 401);
+await json("/api/access-requests?scope=guardian", 401);
 await json("/api/access-requests", 401, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ documentId: "patient-safety-brief" }) });
 
 for (const path of ["/", "/notes/new", "/requests", "/guardians", "/account", "/auth/redirect", "/documents/patient-safety-brief"]) {

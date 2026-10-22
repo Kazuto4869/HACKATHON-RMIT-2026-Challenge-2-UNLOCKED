@@ -3,6 +3,7 @@
 node_modules
 .data
 .superdesign
+tidecloak.json
 npm-debug.log*
 .env*
 !.env.example

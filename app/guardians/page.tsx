@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { ShieldCheck, UsersRound } from "lucide-react";
 
 import { StatusChip } from "../../components/status-chip";
+import { RequestList } from "../../components/request-list";
+import { tideCloakConfigured } from "../../src/server/documents.server";
 
 export const metadata: Metadata = { title: "Guardians" };
 
@@ -26,19 +28,19 @@ export default function GuardiansPage() {
               <p className="mt-0.5 text-sm text-slate-500">Three administrators are planned.</p>
             </div>
           </div>
-          <StatusChip tone="pending">Setup needed</StatusChip>
+          <StatusChip tone="pending">Managed in TideCloak</StatusChip>
         </div>
 
         <div className="mt-7 grid gap-4 border-t border-slate-100 pt-6 sm:grid-cols-2">
           <div className="flex items-start gap-3">
             <ShieldCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-green-600" />
             <div>
-              <p className="text-sm font-medium text-slate-900">One Tide administrator linked</p>
-              <p className="mt-1 text-sm text-slate-500">Two more are needed for the planned 2-of-3 setup.</p>
+              <p className="text-sm font-medium text-slate-900">Two approvals from three Guardians</p>
+              <p className="mt-1 text-sm text-slate-500">Set up three distinct administrators and verify the quorum in TideCloak.</p>
             </div>
           </div>
           <p className="text-sm leading-6 text-slate-500">
-            This app does not approve access yet. The TideCloak setup still needs to be completed.
+            Review and approve permission changes in the TideCloak console. A request in this website does not grant access.
           </p>
         </div>
 
@@ -51,6 +53,10 @@ export default function GuardiansPage() {
           Open TideCloak
         </a>
       </div>
+      <section aria-label="Guardian review queue" className="space-y-4">
+        <h2 className="font-semibold">Requests to review</h2>
+        <RequestList configured={tideCloakConfigured} guardian />
+      </section>
     </section>
   );
 }

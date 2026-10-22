@@ -14,9 +14,11 @@
 
 **Prototype & storytelling.** The responsive app includes a synthetic document register, a locked-document screen, a public reader, an in-memory demo-note form, a truthful authentication-status page, and APIs that keep restricted bodies server-side.
 
-## STEP 5 application
+## STEP 1–6 website
 
-Requirements: Node.js 20.9 or later and npm. The verified implementation used Node.js 24.21.0 and npm 11.19.0.
+Current evidence and the remaining live gates are in [the Step 1–6 review handoff](docs/STEP1_6_REVIEW_HANDOFF.md) and [the Step 6 report](docs/STEP6_CORE_FEATURES_REPORT.md). The code checks pass; the real three-Guardian acceptance is not yet complete. Render is deferred while finishing the local demo.
+
+Requirements: Node.js 24.11 or later and npm. The website uses built-in Node SQLite; Node 24.11 currently emits an experimental SQLite warning.
 
 ```powershell
 npm install
@@ -26,19 +28,26 @@ npm run build
 npm run dev
 ```
 
-Copy `.env.example` to `.env.local` and confirm the public realm/client values against the downloaded `securedocs-client` adapter once a realm is configured. Open <http://127.0.0.1:3000/>; the configured redirect URI and silent-check URI deliberately use that exact origin.
+Copy `.env.example` to `.env.local` and set the verified realm/client values. The current local values are `http://127.0.0.1:8080/`, `securedocs`, `securedocs-client`, and website origin `http://127.0.0.1:3000`. Keep these exact origins consistent.
 
-The create-note screen and access-request store are deliberately in-memory synthetic demos. Refreshing removes a note draft, and restarting the server removes pending requests. Do not enter real or confidential information. The app does not commit `tidecloak.json`, tokens, or credentials. Missing, malformed, forged, expired, wrong-issuer, and wrong-client tokens fail closed; a verified token still needs the matching client role.
+Export the **Tide** client adapter to the gitignored `tidecloak.json` from `GET /admin/realms/{realm}/vendorResources/get-installations-provider?clientId={client UUID}&providerId=keycloak-oidc-keycloak-json`. The ordinary Keycloak installation endpoint omits Tide fields. The runtime requires embedded public `jwk` keys; it never substitutes remote signing keys when the adapter is missing. Browser config contains only allowlisted public adapter fields, never client secrets. Commit and sign the new redirect origin in TideCloak, re-export the adapter, and restart the website. See [Vietnamese setup/enrollment instructions](docs/TIDE_GUARDIAN_SETUP_VI.md).
 
-At the current handoff, Docker Desktop's Linux engine runs but contains no SecureDocs container or volume. STEP 3 was verified under a different Windows profile (`C:\Users\LENOVO`), whose data is not present on this host. The user authorized a replacement realm, but this branch contains only non-realm code; live login and Guardian/QEA are not yet verified. See [the STEP 5 implementation report](docs/STEP5_IMPLEMENTATION_REPORT.md) for exact evidence and continuation steps.
+Open <http://127.0.0.1:3000/>. With the server running, use `npm run verify:step6` for HTTP smoke checks. It checks anonymous/forged-token denials, public reads, routes and absent protected content; it does not claim a live Tide login or QEA grant.
+
+The optional `Dockerfile` builds a standalone website image: `docker build -t securedocs-web:local .`. A read-only unauthenticated preview can run with `docker run --rm -p 127.0.0.1:3001:3000 securedocs-web:local`. The adapter, `.env.local` and database are deliberately excluded. Full Tide authentication inside Docker needs explicit runtime adapter mounting and container-to-host issuer/JWKS networking; use the host Node server for the local integrated demo. TideCloak remains in its separate existing container.
+
+Notes and pending requests persist in `.data/securedocs.sqlite` across restarts. This directory and SQLite journal files are ignored by Git and excluded from standalone/image builds. Do not delete `.data` to troubleshoot. New notes use the verified token subject as owner; a user cannot supply another owner. Verified owners can read their own notes; other readers require the exact document-specific client role. Public notes are readable by everyone. Metadata responses never contain bodies.
+
+Only synthetic data is permitted. SQLite stores bodies in plaintext on the server; no E2EE guarantee is claimed. Missing, malformed, forged, expired, wrong-issuer, wrong-audience and wrong-client tokens fail closed. Requests are persistent and idempotent per user/document, but never grant a role. Their displayed Available state is derived from the current verified permission, not an app-local approval flag.
+
+On this Windows checkout, Docker Engine and `securedocs-tidecloak` were re-verified running, with the existing `securedocs_tide_data` volume preserved. Realm `securedocs` and one linked Tide administrator exist. The imported Step 5 report's missing-container claim describes another host and is historical here. Website sign-in and owner create/read are user-confirmed; additional Guardian enrollments and the real 2-of-3 grant remain subject to the gates in [the Step 6 report](docs/STEP6_CORE_FEATURES_REPORT.md). Seven QEA changes were observed pending with zero approvals after an enclave timeout; no approval was automated or fabricated.
 
 ## SecureDocs local development (STEP 3)
 
 Windows PowerShell and VS Code terminal; development only. See the
 [environment verification report](docs/STEP3_ENVIRONMENT_REPORT.md) for tested
-results and the historical authentication-ready state. The current Docker engine
-was inspected and found empty; creating a replacement realm was authorized but
-is deferred while the non-realm STEP 5 branch is published.
+results and the historical authentication-ready state. The existing Docker
+container and volume have been re-verified on this host and are preserved.
 
 Realm verified during STEP 3: `securedocs`. Its linked Tide administrator used
 <http://127.0.0.1:8080/realms/securedocs/tide-console/>. Enrollment and a console
@@ -121,3 +130,7 @@ References: [TideCloak quickstart](https://docs.tide.org/get-started/Tidecloak%2
 [AGY CLI MCP](https://antigravity.google/docs/mcp?tab=cli),
 [Raziel](https://github.com/tide-foundation/raziel-mcp),
 [QEA governance](https://docs.tide.org/Core-Concepts/iga-workflow).
+
+Local demo update: website sign-in is user-confirmed. The write-origin check now uses the configured public origin because NextRequest normalizes `127.0.0.1` to `localhost`; unrelated origins remain blocked. Browser save/read are user-confirmed; the real three-Guardian grant still needs acceptance (see the Step 6 report).
+
+Confirmed browser follow-up: user successfully signed in, saved a note and read it after the write-origin fix. Remaining live acceptance: logout/refresh, two independent Guardian enrollments, and genuine 2-of-3 role-grant enforcement.

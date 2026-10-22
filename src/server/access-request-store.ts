@@ -5,6 +5,7 @@ export interface AccessRequestStore {
   create(documentId: string, requesterId: string): AccessRequest;
   find(documentId: string, requesterId: string): AccessRequest | null;
   list(requesterId: string): AccessRequest[];
+  listForReview(): AccessRequest[];
 }
 
 export function createAccessRequestStore(
@@ -38,6 +39,10 @@ export function createAccessRequestStore(
     list(requesterId) {
       return (database.prepare("SELECT * FROM access_requests WHERE requesterId = ? ORDER BY createdAt DESC, id")
         .all(requesterId) as unknown as AccessRequest[]).map((request) => ({ ...request }));
+    },
+    listForReview() {
+      return (database.prepare("SELECT * FROM access_requests ORDER BY createdAt DESC, id")
+        .all() as unknown as AccessRequest[]).map((request) => ({ ...request }));
     },
   };
 }

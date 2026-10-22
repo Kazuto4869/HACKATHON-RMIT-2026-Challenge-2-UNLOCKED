@@ -87,7 +87,8 @@ export function createTideAuthorizationAdapter(
         ) return null;
 
         const roles = stringRoles(claims.resource_access?.[config.resource]?.roles);
-        return { subject: claims.sub, roles: [...new Set(roles)] };
+        const isGuardian = stringRoles(claims.resource_access?.["realm-management"]?.roles).includes("tide-realm-admin");
+        return { subject: claims.sub, roles: [...new Set(roles)], ...(isGuardian ? { isGuardian: true } : {}) };
       } catch {
         return null;
       }

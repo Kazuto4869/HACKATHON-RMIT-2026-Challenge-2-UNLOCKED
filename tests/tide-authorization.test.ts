@@ -168,4 +168,16 @@ describe("Tide access-token boundary", () => {
     assert.equal(await adapter.canReadDocument({ subject: "other-user", roles: [] }, document), false);
     assert.equal(await adapter.canReadDocument({ subject: "other-user", roles: ["doc_read_coastal_resilience_notes"] }, document), false);
   });
+
+  test("Guardian review access requires the verified realm-management client role", async () => {
+    const base = { sub: "requester", typ: "Bearer", aud: config.resource, exp: 4102444800 };
+    for (const [claims, expected] of [
+      [{ ...base, realm_access: { roles: ["tide-realm-admin"] } }, undefined],
+      [{ ...base, resource_access: { "realm-management": { roles: ["tide-realm-admin"] } } }, true],
+    ] as const) {
+      const adapter = createTideAuthorizationAdapter(config, async () => claims);
+      const viewer = await adapter.resolveViewer(new Request("http://127.0.0.1", { headers: { Authorization: "Bearer test-fixture" } }));
+      assert.equal(viewer?.isGuardian, expected);
+    }
+  });
 });

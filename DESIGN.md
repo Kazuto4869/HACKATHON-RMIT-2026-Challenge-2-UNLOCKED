@@ -8,11 +8,11 @@ Operate. The evaluator should understand the access boundary while completing a 
 
 ## Visual system
 
-Use a quiet document-registry character: warm paper surfaces, deep ink text, a restrained moss accent, squared editorial type hierarchy, and thin rules. Prefer structured rows and generous whitespace over a grid of interchangeable cards. Locks and status labels must remain legible without color.
+Use the approved light, airy web design: Slate 50 background/sidebar, white surfaces, Slate 200 borders, Slate 900 text, Slate 500 secondary text, and Blue 600 primary actions. A 220px desktop sidebar contains My Documents, Shared Requests and Guardians. Use rounded-xl cards, p-6 and gap-6. Document cards show only title, a one-line summary and a status badge. No dark sidebar, jargon-heavy dashboard or decorative security logs.
 
 ## First viewport
 
-Lead with the working document register and its mixed public/locked states, not a marketing hero. Make the server-enforced boundary visible in the dashboard copy and primary locked action.
+Lead with My Documents, search, New Note and a three-column document grid. Available, Pending and Locked states must reflect actual access/request information. Never display an invented 1/2 approval count.
 
 ## Interaction
 
@@ -20,8 +20,8 @@ Use direct links and native form controls. No ornamental animation. Hover, focus
 
 ## Responsive behavior
 
-Desktop rows collapse into stacked document summaries below tablet width; navigation wraps without hiding routes; touch targets remain at least 44px high.
+Desktop uses three columns, tablet two and mobile one. Sidebar navigation wraps horizontally on smaller screens. Touch controls remain at least 44px high.
 
 ## Reusable tokens
 
-Tokens live in `app/globals.css` for paper, ink, muted ink, rule, moss, amber, danger, radii, and elevation. Components use those tokens rather than route-specific colors.
+Tailwind classes and small shared component rules in `app/globals.css` define the system. Lucide supplies icons. Green means Available, amber Pending and red Locked; every badge also has a text label. Requests show business status, while actual role-grant approval belongs to TideCloak.

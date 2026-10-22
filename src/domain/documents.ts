@@ -30,11 +30,13 @@ export interface DocumentListItem extends DocumentMetadata {
 
 export interface AccessRequestItem extends AccessRequest {
   document: DocumentMetadata;
+  readerRole?: string | null;
 }
 
 export interface VerifiedViewer {
   subject: string;
   roles: readonly string[];
+  isGuardian?: boolean;
 }
 
 export type DocumentReadResult =

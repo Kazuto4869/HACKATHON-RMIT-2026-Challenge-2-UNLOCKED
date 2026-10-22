@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
-import { documentService, tideAuthorization } from "../../../src/server/documents.server";
+import { appOrigin, documentService, tideAuthorization } from "../../../src/server/documents.server";
+import { isAllowedWriteOrigin } from "../../../src/server/write-origin";
 import { documentRepository, accessRequestStore } from "../../../src/server/document-store.server";
 import { validateNoteInput } from "../../../src/domain/note-validation";
 
@@ -24,8 +25,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const viewer = await tideAuthorization.resolveViewer(request);
   if (!viewer) return NextResponse.json({ error: "Sign in to create a note." }, { status: 401, headers });
-  const origin = request.headers.get("origin");
-  if (origin && origin !== new URL(request.url).origin) {
+  if (!isAllowedWriteOrigin(request, appOrigin)) {
     return NextResponse.json({ error: "Cross-origin writes are not allowed." }, { status: 403, headers });
   }
   let input: unknown;

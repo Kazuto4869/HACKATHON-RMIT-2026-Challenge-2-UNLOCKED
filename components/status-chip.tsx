@@ -8,9 +8,9 @@ export function StatusChip({
   children: ReactNode;
 }) {
   const styles = {
-    available: "bg-green-100 text-green-700",
-    pending: "bg-amber-100 text-amber-700",
-    locked: "bg-red-100 text-red-600",
+    available: "bg-[#DCFCE7] text-[#16A34A]",
+    pending: "bg-[#FEF3C7] text-[#D97706]",
+    locked: "bg-[#FEE2E2] text-[#DC2626]",
   };
 
   return (

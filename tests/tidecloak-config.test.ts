@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, test } from "node:test";
 
-import { loadTideCloakConfigFromEnv } from "../src/server/tidecloak-config.server.ts";
+import { loadTideCloakConfigFromEnv, mergeTideCloakAdapter } from "../src/server/tidecloak-config.server.ts";
 
 const configuredEnv = {
   NEXT_PUBLIC_TIDECLOAK_AUTH_SERVER_URL: "http://127.0.0.1:8080/",
@@ -41,5 +41,19 @@ describe("TideCloak runtime configuration", () => {
       }),
       null,
     );
+  });
+
+  test("requires a matching public Tide adapter and embedded public keys", () => {
+    const config = loadTideCloakConfigFromEnv(configuredEnv)!;
+    const key = { kty: "OKP", crv: "Ed25519", x: "synthetic-public-key" };
+    const adapter = { realm: config.realm, resource: config.resource, "public-client": true, jwk: { keys: [key] }, vendorId: "synthetic-vendor", credentials: { secret: "must-not-reach-browser" } };
+    assert.equal(mergeTideCloakAdapter(config, {}) , null);
+    assert.equal(mergeTideCloakAdapter(config, { ...adapter, jwk: undefined }), null);
+    assert.equal(mergeTideCloakAdapter(config, { ...adapter, resource: "different-client" }), null);
+    assert.equal(mergeTideCloakAdapter(config, { ...adapter, jwk: { keys: [{ ...key, d: "private-material" }] } }), null);
+    const merged = mergeTideCloakAdapter(config, adapter)!;
+    assert.equal(merged.vendorId, "synthetic-vendor");
+    assert.equal(Object.hasOwn(merged, "credentials"), false);
+    assert.deepEqual(merged.jwk?.keys, [key]);
   });
 });
