@@ -34,7 +34,8 @@ The create-note screen is deliberately an in-memory synthetic demo: refreshing r
 
 Windows PowerShell and VS Code terminal; development only. See the
 [environment verification report](docs/STEP3_ENVIRONMENT_REPORT.md) for tested
-results and authentication readiness. No application has been scaffolded yet.
+results and authentication readiness. STEP 4 adds the application above while
+preserving the verified TideCloak environment setup in this section.
 
 Current verified realm: `securedocs`. Its linked Tide administrator can use
 <http://127.0.0.1:8080/realms/securedocs/tide-console/>. Enrollment and a console

@@ -69,7 +69,7 @@ The protected body is not read for an anonymous or policy-denied request. It is 
 | UI inspection | PASS | Codex in-app browser captured dashboard at 1440px and 390px, locked detail at 390px, and a completed note form at 1440px; no browser warnings or errors. Screenshots were inspected in-session and were not committed. |
 | Impeccable detector | PASS | `impeccable.cmd detect --json app components` returned `[]`. |
 
-The production build is left running at <http://127.0.0.1:3122/> for handoff (process ID recorded at launch: 26068). That process is local only and may end with the Codex host session.
+The production build was inspected at <http://127.0.0.1:3122/>. Start it with `npm run start -- --hostname 127.0.0.1 --port 3122` when a handoff server is needed.
 
 ## Demo walkthrough
 
