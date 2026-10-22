@@ -1,0 +1,5 @@
+# Local credentials and downloaded Tide client configurations.
+.env
+.env.*
+!.env.example
+**/tidecloak.json
